@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Support\Facades\Auth;
 
 class VerificationController extends Controller
 {
@@ -27,6 +28,16 @@ class VerificationController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    protected function redirectTo()
+    {
+        $role = Auth::user()->getRoleNames();
+        foreach($role as $r){
+            if($r === 'Peserta'){
+                return '/datadiri/create';
+            }
+            return '/home';
+        }
+    }
 
     /**
      * Create a new controller instance.

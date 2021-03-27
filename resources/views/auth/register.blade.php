@@ -54,45 +54,37 @@
             <div class="max-w-md mx-auto my-10 bg-white p-5 rounded-md shadow-sm">
                 <div class="text-center">
                     <h1 class="my-3 text-3xl font-semibold text-gray-700 dark:text-gray-200">Selamat Datang</h1>
-                    <p class="text-gray-400 dark:text-gray-400">Di Dispora Pancakarsa</p>
+                    <p class="text-gray-400 dark:text-gray-400">Di Beasiswa Pancakarsa</p>
                 </div>
                 <div class="m-7">
                     <form action="{{ route('register') }}" method="POST">
                         @csrf
                         <div class="mb-6">
                             <label for="name" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">Nama</label>
-                            <input type="text" name="name" id="name" required class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" value="{{ old('name') }}" required autocomplete="name" autofocus/>
+                            <input type="text" name="name" id="name" required class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300" value="{{ old('name') }}" required autocomplete="name" autofocus/>
                             @error('name')
-                            <span class="text-sm text-red-500 block" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                                <p class="text-xs italic text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="mb-6">
                             <label for="email" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">Email</label>
-                            <input type="email" name="email" class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" value="{{ old('email') }}" required autocomplete="email"/>
+                            <input type="email" name="email" class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300" value="{{ old('email') }}" required autocomplete="email"/>
                             @error('email')
-                            <span class="text-sm text-red-500 block" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                                <p class="text-xs italic text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="mb-6">
                             <label for="pasword" class="text-sm text-gray-600 dark:text-gray-400">Password</label>
-                            <input type="password" name="password" class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" required autocomplete="new-password"/>
+                            <input type="password" name="password" class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300" required autocomplete="new-password"/>
                             @error('password')
-                            <span class="text-sm text-red-500 block" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                                <p class="text-xs italic text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="mb-6">
                             <label for="konfirmasi_password" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">Konfirmasi Password</label>
-                            <input type="password" name="password_confirmation" class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" required autocomplete="new-password">
+                            <input type="password" name="password_confirmation" class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300" required autocomplete="new-password">
                             @error('password_confirmation')
-                            <span class="text-sm text-red-500 block" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                                <p class="text-xs italic text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="mb-6">
@@ -101,13 +93,13 @@
                     </form>
                 </div>
                 <div class="text-right mt-10">
-                    <a href="/login">Sudah punya Akun? <span class="text-green-500 mr-3">Login</span></a>
+                    <a href="{{ url('/login') }}">Sudah punya Akun? <span class="text-blue-500 hover:text-blue-700 mr-3">Login</span></a>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="../js/app.js"></script>
+    <script src="{{ url('../js/app.js') }}"></script>
 </body>
 </html>
 

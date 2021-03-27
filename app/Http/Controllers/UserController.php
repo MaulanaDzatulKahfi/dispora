@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
 use Illuminate\Support\Arr;
+use DataTables;
 
 class UserController extends Controller
 {
@@ -20,14 +21,43 @@ class UserController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:user-create', ['only' => ['create','store']]);
+        $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:user-delete', ['only' => ['destroy']]);
         $this->middleware(['auth','verified']);
     }
 
     public function index(Request $request)
     {
-        $data = User::orderBy('id','DESC')->paginate(5);
-        return view('users.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        $tittle = 'user';
+        if ($request->ajax()) {
+            $user = User::latest()->get('*');
+            // $user = DB::table('users')->select('*')->get();
+            return Datatables::of($user)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($user){
+                        $btn = '
+                            <a href="'.route("users.edit", $user->id).'" class="bg-blue-500 text-white rounded w-16 h-6 text-sm focus:outline-none">edit</a>
+                            <form action="'.route("users.destroy", $user->id).'" method="POST">
+                                '.csrf_field().'
+                                '. method_field('DELETE').'
+                                <button type="submit" class="bg-red-500 text-white rounded-full w-16 h-6 text-sm focus:outline-none" onclick="return confirm(`Yakin? Data Ini Akan Dihapus?`)">
+                                    Hapus
+                                </button>
+                            </form>
+                            ';
+                        return $btn;
+                    })
+                    ->addColumn('role', function($user){
+                        foreach ($user->getRoleNames() as $v ) {
+                            return $v;
+                        }
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('users.index',compact('tittle'));
     }
 
     /**
@@ -37,8 +67,9 @@ class UserController extends Controller
      */
     public function create()
     {
+        $tittle = 'role';
         $roles = Role::pluck('name','name')->all();
-        return view('users.create',compact('roles'));
+        return view('users.create',compact('roles', 'tittle'));
     }
 
     /**
@@ -75,7 +106,8 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        return view('users.show',compact('user'));
+        $tittle = 'show user';
+        return view('users.show',compact('user', 'tittle'));
     }
 
     /**
@@ -86,11 +118,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $tittle = 'role';
         $user = User::find($id);
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
-
-        return view('users.edit',compact('user','roles','userRole'));
+        return view('users.edit',compact('user','roles','userRole', 'tittle'));
     }
 
     /**
@@ -103,9 +135,6 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
 
@@ -123,7 +152,7 @@ class UserController extends Controller
         $user->assignRole($request->input('roles'));
 
         return redirect()->route('users.index')
-                        ->with('success','User updated successfully');
+                        ->with('success','User Berhasil DiUpdate!');
     }
 
     /**

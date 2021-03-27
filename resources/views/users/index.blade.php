@@ -1,60 +1,82 @@
-@extends('layouts.app')
+@extends('layouts.template')
 
+@section('header')
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" defer></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js" defer></script>
+
+    <link  href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+@endsection
 
 @section('content')
-<div class="row">
-    <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
-            <h2>Users Management</h2>
+    <div x-data="{ showModal1: false }" :class="{ 'overflow-y-hidden': showModal1 }">
+        <div class="bg-green-600 p-4 shadow text-xl text-white">
+            <h3 class="font-bold pl-2">User</h3>
         </div>
-        <div class="pull-right">
-            <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
+
+        <!--Container-->
+        <div class="container w-full md:w-4/5 xl:w-3/5  mx-auto px-2 mt-4">
+            @if (session('success'))
+                <div class="bg-green-100 border-l-4 border-green-600 text-green-700 p-4 mt-3" role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
+            <!--Card-->
+            <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+                <table id="dataTable" class="stripe hover text-gray-700" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+                    <thead>
+                        <tr>
+                            <th data-priority="1">No</th>
+                            <th data-priority="2">Nama</th>
+                            <th data-priority="3">Email</th>
+                            <th data-priority="4">Role</th>
+                            <th data-priority="5">Status</th>
+                            <th data-priority="6">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <!--/Card-->
         </div>
-    </div>
-</div>
-
-
-@if ($message = Session::get('success'))
-<div class="alert alert-success">
-  <p>{{ $message }}</p>
-</div>
-@endif
-
-
-<table class="table table-bordered">
- <tr>
-   <th>No</th>
-   <th>Name</th>
-   <th>Email</th>
-   <th>Roles</th>
-   <th width="280px">Action</th>
- </tr>
- @foreach ($data as $key => $user)
-  <tr>
-    <td>{{ ++$i }}</td>
-    <td>{{ $user->name }}</td>
-    <td>{{ $user->email }}</td>
-    <td>
-      @if(!empty($user->getRoleNames()))
-        @foreach($user->getRoleNames() as $v)
-           <label class="badge badge-success">{{ $v }}</label>
-        @endforeach
-      @endif
-    </td>
-    <td>
-       <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
-       <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
-        {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
-            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-        {!! Form::close() !!}
-    </td>
-  </tr>
- @endforeach
-</table>
-
-
-{!! $data->render() !!}
-
-
-<p class="text-center text-primary"><small>Tutorial by ItSolutionStuff.com</small></p>
+        <!--/container-->
 @endsection
+
+@section('script')
+    <script>
+        // dataTable
+        $(document).ready(function() {
+            var table = $('#dataTable').DataTable({
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                ajax: "{{ route('users.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'name', name: 'name'},
+                    {data: 'email', name: 'email'},
+                    {data: 'role', name: 'role'},
+                    {
+                        data: 'email_verified_at', name: 'email_verified_at',
+                        'render': function (data, type, row) {
+                            if (row.email_verified_at === null) {
+                                return '<button class="bg-red-600 text-white rounded-full px-2 text-sm focus:outline-none">Verify</button>';
+                            }else {
+                                return '<button class="bg-green-600 text-white rounded-full px-2 text-sm focus:outline-none">Verified</button>';
+                            }
+                        }
+                    },
+                    {
+                        data: 'action', name: 'action',
+                        orderable: true,
+                        searchable: true,
+                    },
+                ]
+            }).columns.adjust().responsive.recalc();
+        });
+
+    </script>
+@endsection
+

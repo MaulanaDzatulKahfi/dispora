@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Models\Perting;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class PertingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,10 @@ class ProductController extends Controller
      */
     function __construct()
     {
-         $this->middleware('permission:product-list|product-create|product-edit|product-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:product-create', ['only' => ['create','store']]);
-         $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+        //  $this->middleware('permission:perting-list|perting-create|perting-edit|perting-delete', ['only' => ['index','show']]);
+        //  $this->middleware('permission:perting-create', ['only' => ['create','store']]);
+        //  $this->middleware('permission:perting-edit', ['only' => ['edit','update']]);
+        //  $this->middleware('permission:perting-delete', ['only' => ['destroy']]);
          $this->middleware(['auth','verified']);
     }
     /**
@@ -27,9 +27,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::latest()->paginate(5);
-        return view('products.index',compact('products'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        $tittle = 'Perguruan Tinggi';
+        $perting = Perting::all();
+        return view('perting.index', compact('perting', 'tittle'));
     }
 
     /**
