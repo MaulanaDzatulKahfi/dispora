@@ -38,14 +38,16 @@ class UserController extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function($user){
                         $btn = '
-                            <a href="'.route("users.edit", $user->id).'" class="bg-blue-500 text-white rounded w-16 h-6 text-sm focus:outline-none">edit</a>
-                            <form action="'.route("users.destroy", $user->id).'" method="POST">
-                                '.csrf_field().'
-                                '. method_field('DELETE').'
-                                <button type="submit" class="bg-red-500 text-white rounded-full w-16 h-6 text-sm focus:outline-none" onclick="return confirm(`Yakin? Data Ini Akan Dihapus?`)">
-                                    Hapus
-                                </button>
-                            </form>
+                            <div class="flex">
+                                <a href="'.route("users.edit", $user->id).'" class="bg-blue-500 text-white rounded-full w-16 h-6 text-sm focus:outline-none text-center">edit</a>
+                                <form action="'.route("users.destroy", $user->id).'" method="POST" class="bg-red-500 text-white rounded-full w-16 h-6 text-sm focus:outline-none text-center">
+                                    '.csrf_field().'
+                                    '. method_field('DELETE').'
+                                    <button type="submit" onclick="return confirm(`Yakin? Data Ini Akan Dihapus?`)">
+                                        Hapus
+                                    </button>
+                                </form>
+                            </div>
                             ';
                         return $btn;
                     })
@@ -95,19 +97,6 @@ class UserController extends Controller
 
         return redirect()->route('users.index')
                         ->with('success','User created successfully');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $user = User::find($id);
-        $tittle = 'show user';
-        return view('users.show',compact('user', 'tittle'));
     }
 
     /**

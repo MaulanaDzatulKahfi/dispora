@@ -12,7 +12,7 @@
 
     <div class="flex items-center bg-gray-50">
         <div class="container mx-auto">
-            <div class="max-w-md mx-auto mt-10 bg-white p-5 rounded-md shadow-sm">
+            <div class="max-w-xl mx-auto mt-10 bg-white p-5 rounded-md shadow-sm">
                 <div class="text-center">
                     <h1 class=" text-xl font-semibold text-gray-700 dark:text-gray-200">Form Tambah Permission</h1>
                 </div>

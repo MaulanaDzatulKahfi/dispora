@@ -16,7 +16,7 @@
         </div>
 
         <!--Container-->
-        <div class="container w-full md:w-4/5 xl:w-3/5  mx-auto px-2 mt-4">
+        <div class="container w-full mx-auto px-2 mt-4">
             @if (session('success'))
                 <div class="bg-green-100 border-l-4 border-green-600 text-green-700 p-4 mt-3" role="alert">
                     {{ session('success') }}

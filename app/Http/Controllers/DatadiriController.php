@@ -121,7 +121,7 @@ class DatadiriController extends Controller
     {
         $messages = [
             'required' => ':attribute harus diisi!',
-            'number' => ':attribute harus diisi dengan angka!',
+            'numeric' => ':attribute harus diisi dengan angka!',
             'image' => ':attribute harus berupa gambar!',
             'mimes' => ':attribute harus berupa gambar!',
             'max' => 'foto maksimal berukuran 2mb',

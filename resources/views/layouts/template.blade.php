@@ -81,15 +81,17 @@
                         </a>
                     </li>
                     <li class="mr-3 flex-1">
-                        <a href="{{ route('perting.index') }}" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-green-600 border-b-2 border-white hover:border-green-600">
-                            <i class="fas fa-university pr-0 md:pr-3 "></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Perguruan Tinggi</span>
-                        </a>
-                    </li>
-                    <li class="mr-3 flex-1">
                         <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-green-600 border-b-2 border-white hover:border-green-600">
                             <i class="fas fa-tasks  pr-0 md:pr-3"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Beasiswa</span>
                         </a>
                     </li>
+                    @can('perting-list')
+                        <li class="mr-3 flex-1">
+                            <a href="{{ route('perting.index') }}" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-green-600 border-b-2 border-white {{ Request::is('perting', 'perting/*', 'jurusan', 'jurusan/*')? "border-green-600":"hover:border-green-600" }}">
+                                <i class="fas fa-university pr-0 md:pr-3 {{ Request::is('perting', 'perting/*', 'jurusan', 'jurusan/*')? "text-green-600":"hover:text-green-600" }}"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Perguruan Tinggi</span>
+                            </a>
+                        </li>
+                    @endcan
                     @can('user-list')
                         <li class="mr-3 flex-1">
                             <a href="{{ route('users.index') }}" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-green-600 border-b-2 border-white {{ Request::is('users', 'users/*')? "border-green-600":"hover:border-green-600" }}">
@@ -107,8 +109,8 @@
                     @can('permission-list')
                         <li class="mr-3 flex-1">
                             <a href="{{ route('permission.index') }}"
-                            class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-green-600 border-b-2 border-white {{ Request::is('permission/*')? "border-green-600":"hover:border-green-600" }}">
-                                <i class="fas fa-university pr-0 md:pr-3 {{ Request::is('permission/*')? "text-green-600":"hover:text-green-600" }}"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Permission</span>
+                            class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-green-600 border-b-2 border-white {{ Request::is('permission', 'permission/*')? "border-green-600":"hover:border-green-600" }}">
+                                <i class="fas fa-university pr-0 md:pr-3 {{ Request::is('permission', 'permission/*')? "text-green-600":"hover:text-green-600" }}"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Permission</span>
                             </a>
                         </li>
                     @endcan

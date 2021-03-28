@@ -39,7 +39,8 @@ class PertingController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $tittle = 'tambah perguruan tinggi';
+        return view('perting.create', compact('tittle'));
     }
 
     /**
@@ -50,23 +51,17 @@ class PertingController extends Controller
      */
     public function store(Request $request)
     {
-        //request()->validate([
-        //    'name' => 'required',
-        //    'detail' => 'required',
-        //    'user_id' => 'required',
-        //    'slug'    => 'required|min:3|max:255|unique:product',
-
-        //]);
-        $validatedData = $this->validate($request, [
-            'name'      => 'required',
-            'detail'    => 'required',
-
-        ]);
-        Product::create($validatedData);
-        //Product::create($request->all());
-
-        return redirect()->route('products.index')
-                        ->with('success','Product created successfully.');
+        $messages = [
+            'required' => ':attribute harus diisi!',
+            'numeric' => ':attribute harus diisi dengan angka!',
+            'unique' => ':attribute sudah ada!',
+        ];
+        $this->validate($request,[
+            'npsn' => 'required|numeric|unique:perting',
+            'name' => 'required',
+        ], $messages);
+        Perting::create($request->all());
+        return redirect()->route('perting.index')->with('success', 'Perguruan Tinggi Berhasil Ditambahkan!');
     }
 
     /**

@@ -17,7 +17,7 @@
     <div class="max-w-xl mx-auto my-32 sm:px-6 lg:px-8 ">
         <div class="overflow-hidden shadow-md">
             <!-- card header -->
-            <div class="px-6 py-4 bg-green-400 text-white border-b border-gray-200 font-bold uppercase">
+            <div class="px-6 py-4 bg-green-600 text-white border-b border-gray-200 font-bold uppercase">
                 Verifikasi Email Anda
             </div>
 

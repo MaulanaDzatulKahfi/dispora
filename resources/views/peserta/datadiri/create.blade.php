@@ -15,15 +15,55 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js" defer></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" defer></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    {{-- <nav class="bg-white pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0 shadow-md">
+        <div class="flex items-center justify-between">
+            <div class="flex flex-shrink text-gray-800 font-semibold">
+                <img src="{{ asset('img/logo.jpg')}}" alt="logo" class="w-10 h-13 pt-1">
+                <a href="{{ route('home') }}">
+                    <span class="text-sm pl-2 md:text-xl">BEASISWA</span><br>
+                    <span class="text-xs pl-2">PANCAKARSA</span>
+                </a>
+            </div>
+
+            <div class="">
+                <span class="fa fa-home text-green-600"></span><a href="https://ahlibikin.website" class="text-green-600">Home</a>
+            </div>
+
+            <div class="flex">
+                <ul class="list-reset flex flex-1 md:flex-none">
+                    <li class="flex-1 md:flex-none md:mr-3">
+                        <div class="relative inline-block">
+                            <button onclick="toggleDD('myDropdown')" class="drop-button text-gray-600 font-semibold focus:outline-none text-sm lg:text-lg">
+                                {{ Auth::user()->name }}
+                                <svg class="h-4 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                            </button>
+                            <div id="myDropdown" class="dropdownlist absolute bg-white text-gray-500 right-0 mt-3 p-3 overflow-auto z-30 invisible">
+                                <a href="#" class="p-2 text-gray-500 text-sm no-underline hover:no-underline block"><i class="fa fa-user fa-fw"></i> Profile</a>
+                                <a href="#" class="p-2 text-gray-500 text-sm no-underline hover:no-underline block"><i class="fa fa-cog fa-fw"></i> Settings</a>
+                                <a href="{{ route('logout') }}" class="p-2 text-gray-500 text-sm no-underline hover:no-underline block"
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt fa-fw"></i> Log Out</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav> --}}
 
 	<div x-data="app()" x-cloak>
 		<div class="max-w-xl mx-auto px-4">
 			<div x-show.transition="step != 'complete'">
 				<!-- Top Navigation -->
-                <div class="flex justify-around pt-10 pb-3 text-center">
+                <div class="flex justify-around pt-10 pb-3 text-center mt-16">
                     <div>
                         <button @click="step = 1" class="text-lg font-bold text-gray-700 leading-tight focus:outline-none">Data Diri</button>
                     </div>

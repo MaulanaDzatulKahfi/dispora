@@ -11,7 +11,7 @@
 
 @section('content')
     <div class="bg-green-600 p-4 shadow text-xl text-white">
-        <h3 class="font-bold pl-2">Perguruan Tinggi</h3>
+        <h3 class="font-bold pl-2">{{ $perting->name }}</h3>
     </div>
 
     <!--Container-->
@@ -30,37 +30,32 @@
                 <thead>
                     <tr>
                         <th data-priority="1">No</th>
-                        <th data-priority="2">Npsn</th>
                         <th data-priority="2">Nama</th>
                         <th data-priority="3">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($perting as $key => $p)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $p->npsn }}</td>
-                            <td>{{ $p->name }}</td>
-                            <td class="flex justify-center">
-                            {{-- @can('jurusan') --}}
-                                <a class="bg-yellow-400 text-white rounded-full w-16 h-6 text-sm focus:outline-none hover:bg-yellow-600" href="{{ route('jurusan.index', $p->id) }}">jurusan</a>
-                            {{-- @endcan --}}
-                            {{-- @can('perting-edit') --}}
-                                <a class="bg-blue-500 text-white rounded-full w-16 h-6 text-sm focus:outline-none hover:bg-blue-700" href="{{ route('roles.edit',$p->id) }}">edit</a>
-                            {{-- @endcan --}}
-                            {{-- @can('perting-delete') --}}
-                                <form action="{{ route('roles.destroy', $p->id) }}" method="POST">
-                                    @csrf
-                                    {{-- @method('DELETE') --}}
-                                    <button type="submit" class="bg-red-500 text-white rounded-full w-16 h-6 text-sm focus:outline-none hover:bg-red-700" onclick="return confirm('Yakin? Data Ini Akan DiHapus?')">
-                                        hapus
-                                    </button>
-                                </form>
-                            {{-- @endcan --}}
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
+                    <tbody>
+                        @foreach ($jurusan as $key => $j)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $j->name }}</td>
+                                <td class="flex justify-center">
+                                {{-- @can('perting-edit') --}}
+                                    <a class="bg-blue-500 text-white rounded-full w-16 h-6 text-sm focus:outline-none hover:bg-blue-700" href="{{ route('roles.edit',$j->id) }}">edit</a>
+                                {{-- @endcan --}}
+                                {{-- @can('perting-delete') --}}
+                                    <form action="{{ route('roles.destroy', $j->id) }}" method="POST">
+                                        @csrf
+                                        {{-- @method('DELETE') --}}
+                                        <button type="submit" class="bg-red-500 text-white rounded-full w-16 h-6 text-sm focus:outline-none hover:bg-red-700" onclick="return confirm('Yakin? Data Ini Akan DiHapus?')">
+                                            hapus
+                                        </button>
+                                    </form>
+                                {{-- @endcan --}}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
             </table>
         </div>
         <!--/Card-->
