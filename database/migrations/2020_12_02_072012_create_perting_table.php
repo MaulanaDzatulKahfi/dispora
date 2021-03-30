@@ -18,7 +18,6 @@ class CreatePertingTable extends Migration
             $table->id();
             $table->string('npsn');
             $table->string('name');
-            $table->dateTime('deleted_at')->nullable(); // for soft deleted
             $table->timestamps();
 
         });

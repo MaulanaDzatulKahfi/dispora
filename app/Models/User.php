@@ -4,20 +4,14 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-// To use verified on register user
-// 0. Config mailtrap for dummy
-// 1. add " use Illuminate\Contracts\Auth\MustVerifyEmail; " on User Model
-// 2. change class user to " class User extends Authenticatable implements MustVerifyEmail " on User Model
-// 3. add on route " Auth::routes(['verify' => true]); "
-// 4. add on controller __construct method " $this->middleware(['auth','verified']); "
-
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -48,8 +42,5 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    // public function Datadiri()
-    // {
-    //     return $this->belongsTo(Datadiri::class);
-    // }
+    protected $dates = ['deleted_at'];
 }

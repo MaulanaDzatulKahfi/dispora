@@ -18,7 +18,6 @@ class CreateJurusanTable extends Migration
             $table->string('name');
             $table->unsignedBigInteger('perting_id');
             $table->foreign('perting_id')->references('id')->on('perting');
-            $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
         });
     }

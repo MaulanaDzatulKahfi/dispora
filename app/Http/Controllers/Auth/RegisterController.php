@@ -49,11 +49,19 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $messages = [
+            'required' => ':attribute harus diisi!',
+            'numeric' => ':attribute harus diisi dengan angka!',
+            'min' => 'password minimal 8 karakter',
+            'unique' => ':attribute sudah terdaftar',
+            'syarat.required' => 'Klik centang pada pernyataan persetujuan diatas.'
+        ];
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+            'syarat' => ['required'],
+        ], $messages);
     }
 
     /**

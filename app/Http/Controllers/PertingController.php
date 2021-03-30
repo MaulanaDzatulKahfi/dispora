@@ -14,10 +14,10 @@ class PertingController extends Controller
      */
     function __construct()
     {
-        //  $this->middleware('permission:perting-list|perting-create|perting-edit|perting-delete', ['only' => ['index','show']]);
-        //  $this->middleware('permission:perting-create', ['only' => ['create','store']]);
-        //  $this->middleware('permission:perting-edit', ['only' => ['edit','update']]);
-        //  $this->middleware('permission:perting-delete', ['only' => ['destroy']]);
+         $this->middleware('permission:perting-list|perting-create|perting-edit|perting-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:perting-create', ['only' => ['create','store']]);
+         $this->middleware('permission:perting-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:perting-delete', ['only' => ['destroy']]);
          $this->middleware(['auth','verified']);
     }
     /**
@@ -31,24 +31,11 @@ class PertingController extends Controller
         $perting = Perting::all();
         return view('perting.index', compact('perting', 'tittle'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $tittle = 'tambah perguruan tinggi';
         return view('perting.create', compact('tittle'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $messages = [
@@ -63,68 +50,38 @@ class PertingController extends Controller
         Perting::create($request->all());
         return redirect()->route('perting.index')->with('success', 'Perguruan Tinggi Berhasil Ditambahkan!');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
+    public function edit(Perting $perting)
     {
-        return view('products.show',compact('product'));
+        $tittle = 'Perguruan Tinggi';
+        return view('perting.edit',compact('perting', 'tittle'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product)
+    public function update(Request $request, Perting $perting)
     {
-        return view('products.edit',compact('product'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Product $product)
-    {
-         request()->validate([
+        $messages = [
+            'required' => ':attribute harus diisi!',
+            'numeric' => ':attribute harus diisi dengan angka!',
+            'unique' => ':attribute sudah ada!',
+        ];
+        $this->validate($request,[
+            'npsn' => 'required|numeric|unique:perting',
             'name' => 'required',
-            'detail' => 'required',
-        ]);
+        ], $messages);
 
-        $product->update($request->all());
+        $perting->update($request->all());
 
-        return redirect()->route('products.index')
-                        ->with('success','Product updated successfully');
+        return redirect()->route('perting.index')
+                        ->with('success', $perting->name. ' Berhasil Diupdate!');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    // 3. Soft Delete Move To Achive
-    public function destroy(Product $product)
+    public function destroy(Perting $perting)
     {
-        $product->delete();
-        return redirect()->route('products.index')
-                        ->with('success','Product deleted successfully');
+        $perting->delete();
+        return redirect()->route('perting.index')
+                        ->with('success', $perting->name. ' Berhasil Dihapus!');
     }
-
-
     // 4. Soft Delete Permanent
     public function permanent($id)
     {
-        $products = Product::onlyTrashed()->where('id',$id);
+        $products = Perting::onlyTrashed()->where('id',$id);
         $products->forceDelete();
 
         return redirect()->route('products.archive')
@@ -135,7 +92,7 @@ class PertingController extends Controller
     // 5. Soft Delete Archive
     public function archive()
     {
-        $products = Product::onlyTrashed()->get();
+        $products = Perting::onlyTrashed()->get();
         //return view('products.archive', ['products' => $products]);
         return view('products.archive',compact('products'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -146,7 +103,7 @@ class PertingController extends Controller
      // 6. Soft Delete Restore
     public function restore($id)
     {
-            $products = Product::onlyTrashed()->where('id',$id);
+            $products = Perting::onlyTrashed()->where('id',$id);
             $products->restore();
 
             return redirect()->route('products.archive')
@@ -157,8 +114,8 @@ class PertingController extends Controller
     // 7. Soft Delete Restore All
     public function restoreall()
     {
-            $guru = Guru::onlyTrashed();
-            $guru->restore();
+            $perting = Perting::onlyTrashed();
+            $perting->restore();
 
             return redirect()->route('products.archive')
                         ->with('success','Product Restore successfully');

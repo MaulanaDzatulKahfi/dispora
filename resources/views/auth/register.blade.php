@@ -87,8 +87,12 @@
                                 <p class="text-xs italic text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
+                        <input type="checkbox" name="syarat" value="syarat"><label class="text-xs"> Dengan ini saya menyatakan bahwa saya mendaftarkan diri pada program Beasiswa Pancakarsa dan bahwa semua informasi yang saya sampaikan dan lampirkan adalah benar.</label>
+                        @error('syarat')
+                            <p class="text-xs italic text-red-500">{{ $message }}</p>
+                        @enderror
                         <div class="mb-6">
-                            <input type="submit" class="w-full px-3 py-4 text-white bg-green-500 rounded-md focus:bg-green-600 focus:outline-none" value="Daftar">
+                            <input type="submit" class="mt-3 w-full px-3 py-4 text-white bg-green-500 rounded-md focus:bg-green-600 focus:outline-none" value="Daftar">
                         </div>
                     </form>
                 </div>

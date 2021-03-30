@@ -3,10 +3,9 @@
 @section('content')
     <div class="flex bg-green-600 p-4 shadow justify-between">
         <div class="text-xl text-white">
-            <h3 class="font-bold pl-2">Perguruan Tinggi</h3>
-        </div>
-        <div class="text-gray-200">
-            <a href="{{ route('perting.index') }}" class="hover:text-blue-300">perguruan tinggi</a> / <a href="{{ route('perting.create') }}" class="hover:text-blue-300">tambah</a>
+            <h3 class="font-bold pl-2">
+                <a href="{{ route('perting.index') }}" class="hover:text-gray-200">Perguruan Tinggi</a> / <a href="{{ route('perting.create') }}" class="hover:text-gray-200">Tambah</a>
+            </h3>
         </div>
     </div>
 
@@ -41,7 +40,8 @@
                             @enderror
                         </div>
 
-                        <div class="mb-1 text-right">
+                        <div class="mb-1 flex justify-between">
+                            <a href="{{ route('perting.index') }}" class="px-4 py-2 rounded-md bg-gray-200 focus:bg-gray-400 focus:outline-none">Kembali</a>
                             <input type="submit" class="px-4 py-2 rounded-md text-white bg-green-600 focus:bg-green-800 focus:outline-none" value="Tambah">
                         </div>
                     </form>
@@ -50,60 +50,3 @@
         </div>
     </div>
 @endsection
-
-{{-- @extends('layouts.app')
-
-
-@section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Add New Product</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('products.index') }}"> Back</a>
-            </div>
-        </div>
-    </div>
-
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-
-    <form action="{{ route('products.store') }}" method="POST">
-    	@csrf
-
-
-         <div class="row">
-		    <div class="col-xs-12 col-sm-12 col-md-12">
-		        <div class="form-group">
-		            <strong>Name:</strong>
-		            <input type="text" name="name" class="form-control" placeholder="Name">
-		        </div>
-		    </div>
-		    <div class="col-xs-12 col-sm-12 col-md-12">
-		        <div class="form-group">
-		            <strong>Detail:</strong>
-		            <textarea class="form-control" style="height:150px" name="detail" placeholder="Detail"></textarea>
-		        </div>
-		    </div>
-		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-		            <button type="submit" class="btn btn-primary">Submit</button>
-		    </div>
-		</div>
-
-
-    </form>
-
-
-<p class="text-center text-primary"><small>Tutorial by ItSolutionStuff.com</small></p>
-@endsection --}}

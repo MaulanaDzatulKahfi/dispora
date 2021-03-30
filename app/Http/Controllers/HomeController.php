@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Datadiri;
+use App\Models\Kk;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,7 +28,35 @@ class HomeController extends Controller
     public function index()
     {
         $tittle = 'Dashboard';
+        $user_id = Auth::user()->id;
+        $datadiri = Datadiri::where('user_id', $user_id)->first();
+        $kk = Kk::where('user_id', $user_id)->first();
         $role = Auth::user()->getRoleNames();
-        return view('home', compact('tittle', 'role'));
+
+        foreach($role as $r){
+            if($r === 'Peserta'){
+                if ($datadiri && $kk) {
+                    return view('home', compact('tittle', 'role'));
+                }else{
+                    return redirect()->route('datadiri.create');
+                }
+            }
+            return view('home', compact('tittle', 'role'));
+        }
+    }
+    public function profil()
+    {
+        $tittle = 'profil';
+        // $datadiri = Datadiri::find();
+        return view('profil', compact('tittle'));
+    }
+    public function update(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        User::where('id', $id)->update([
+            'name' => $request->name
+        ]);
+        return redirect()->route('profil')->with('success', 'Nama Akun Berhasil Diupdate!');
     }
 }

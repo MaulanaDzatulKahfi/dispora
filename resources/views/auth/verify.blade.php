@@ -14,11 +14,11 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-    <div class="max-w-xl mx-auto my-32 sm:px-6 lg:px-8 ">
+    <div class="max-w-md md:max-w-xl mx-auto my-32 sm:px-6 lg:px-8 ">
         <div class="overflow-hidden shadow-md">
             <!-- card header -->
             <div class="px-6 py-4 bg-green-600 text-white border-b border-gray-200 font-bold uppercase">
-                Verifikasi Email Anda
+                VERIFIKASI EMAIL KAMU
             </div>
 
             <!-- card body -->
@@ -28,11 +28,10 @@
                         {{ __('Tautan verifikasi baru telah dikirim ke alamat email Anda.') }}
                     </div>
                 @endif
-                Sebelum melanjutkan, periksa email Anda untuk tautan verifikasi. <br>
-                Jika Anda tidak menerima email,<br>
+                Sebelum melanjutkan, silakan cek email kamu untuk melakukan verifikasi. <br>
                 <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
                     @csrf
-                    <button type="submit" class="text-blue-600 hover:text-blue-400">{{ __('klik di sini untuk meminta yang lain') }}</button>.
+                    Klik <button type="submit" class="text-blue-600 hover:text-blue-800 underline">{{ __('di sini') }}</button> jika tautan verifikasi belum ada di email kamu.
                 </form>
             </div>
         </div>

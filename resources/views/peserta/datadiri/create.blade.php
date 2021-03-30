@@ -19,7 +19,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    {{-- <nav class="bg-white pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0 shadow-md">
+    <nav class="bg-white pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0 shadow-md">
         <div class="flex items-center justify-between">
             <div class="flex flex-shrink text-gray-800 font-semibold">
                 <img src="{{ asset('img/logo.jpg')}}" alt="logo" class="w-10 h-13 pt-1">
@@ -57,7 +57,7 @@
                 </ul>
             </div>
         </div>
-    </nav> --}}
+    </nav>
 
 	<div x-data="app()" x-cloak>
 		<div class="max-w-xl mx-auto px-4">
@@ -272,6 +272,23 @@
 		</div>
 	</div>
 
+    <script>
+        /*Toggle dropdown list*/
+        function toggleDD(myDropMenu) {
+            document.getElementById(myDropMenu).classList.toggle("invisible");
+        }
+        window.onclick = function(event) {
+            if (!event.target.matches('.drop-button') && !event.target.matches('.drop-search')) {
+                var dropdowns = document.getElementsByClassName("dropdownlist");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (!openDropdown.classList.contains('invisible')) {
+                        openDropdown.classList.add('invisible');
+                    }
+                }
+            }
+        }
+    </script>
 	<script>
 		function app() {
 			return {

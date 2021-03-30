@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes; // 1. Soft Delete
+// use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Perting extends Model
 {
     use HasFactory;
-    use SoftDeletes; // 2. Soft Delete
+    // use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
@@ -19,9 +19,10 @@ class Perting extends Model
     protected $fillable = [
         'npsn', 'name'
     ];
-
-    // 3. Soft Delete
     protected $table = "perting";
-    protected $dates = ['deleted_at'];
 
+    public function jurusan()
+    {
+        return $this->hasMany(Jurusan::class);
+    }
 }

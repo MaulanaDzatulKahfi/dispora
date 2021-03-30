@@ -31,7 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         VerifyEmail::toMailUsing(function (User $user, string $verificationUrl) {
             return (new MailMessage)
             ->subject(Lang::get('Verifikasi Alamat Email'))
-            ->line(Lang::get('Silahkan klik tombol di bawah ini untuk memverifikasi alamat email Anda.'))
+            ->line(Lang::get('Silakan klik tombol di bawah untuk verifikasi email kamu'))
             ->action(Lang::get('Verifikasi Alamat Email'), $verificationUrl)
             ->line(Lang::get('Abaikan email ini kalau kamu tidak melakukan registrasi di website kami.'));
         });

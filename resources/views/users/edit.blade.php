@@ -4,10 +4,11 @@
 
     <div class="flex bg-green-600 p-4 shadow justify-between">
         <div class="text-xl text-white">
-            <h3 class="font-bold pl-2">User</h3>
-        </div>
-        <div class="text-gray-200">
-            <a href="{{ route('users.index') }}" class="hover:text-blue-300">user</a> / <a href="{{ route('users.edit', $user->id) }}" class="hover:text-blue-300">edit</a>
+            <h3 class="font-bold pl-2">
+                <a href="{{ route('users.index') }}" class="hover:text-gray-200">User</a>
+                 /
+                <a href="{{ route('users.edit', $user->id) }}" class="hover:text-gray-200">Edit</a>
+            </h3>
         </div>
     </div>
 
@@ -59,8 +60,9 @@
                                 <p class="text-xs italic text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
-                        <div class="mb-1 text-right">
-                            <input type="submit" class="px-4 py-2 rounded-md text-white bg-green-600 focus:bg-green-800 focus:outline-none" value="Kirim">
+                        <div class="mb-1 flex justify-between">
+                            <a href="{{ route('users.index') }}" class="px-4 py-2 rounded-md bg-gray-200 focus:bg-gray-400 focus:outline-none">Kembali</a>
+                            <input type="submit" class="px-4 py-2 rounded-md text-white bg-green-600 focus:bg-green-800 focus:outline-none" value="Edit">
                         </div>
                     </form>
                 </div>

@@ -46,8 +46,7 @@
                                 <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
                             </button>
                             <div id="myDropdown" class="dropdownlist absolute bg-white text-gray-500 right-0 mt-3 p-3 overflow-auto z-30 invisible">
-                                <a href="#" class="p-2 text-gray-500 text-sm no-underline hover:no-underline block"><i class="fa fa-user fa-fw"></i> Profile</a>
-                                <a href="#" class="p-2 text-gray-500 text-sm no-underline hover:no-underline block"><i class="fa fa-cog fa-fw"></i> Settings</a>
+                                <a href="{{ route('profil') }}" class="p-2 text-gray-500 text-sm no-underline hover:no-underline block"><i class="fa fa-user fa-fw"></i> Profil</a>
                                 <a href="{{ route('logout') }}" class="p-2 text-gray-500 text-sm no-underline hover:no-underline block"
                                 onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt fa-fw"></i> Log Out</a>
@@ -101,8 +100,8 @@
                     @endcan
                     @can('role-list')
                         <li class="mr-3 flex-1">
-                            <a href="{{ route('roles.index') }}" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-green-600 border-b-2 border-white {{ Request::is('roles')? "border-green-600":"hover:border-green-600" }}">
-                                <i class="fas fa-university pr-0 md:pr-3 {{ Request::is('roles')? "text-green-600":"hover:text-green-600" }}"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Roles</span>
+                            <a href="{{ route('roles.index') }}" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-green-600 border-b-2 border-white {{ Request::is('roles', 'roles/*')? "border-green-600":"hover:border-green-600" }}">
+                                <i class="fas fa-university pr-0 md:pr-3 {{ Request::is('roles', 'roles/*')? "text-green-600":"hover:text-green-600" }}"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Roles</span>
                             </a>
                         </li>
                     @endcan

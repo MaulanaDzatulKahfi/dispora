@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Kk extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'kk';
     protected $fillable = ['no_kk', 'foto_kk', 'user_id'];
+    protected $dates = ['deleted_at'];
 }

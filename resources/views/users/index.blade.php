@@ -24,6 +24,11 @@
             @endif
             <!--Card-->
             <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+                @can('user-archive')
+                    <div class="flex mb-2">
+                        <a href="{{ route('users.archive') }}" class="bg-yellow-400 text-white p-2 rounded-md hover:bg-yellow-600">Sampah</a>
+                    </div>
+                @endcan
                 <table id="dataTable" class="stripe hover text-gray-700" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
                     <thead>
                         <tr>

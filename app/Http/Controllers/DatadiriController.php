@@ -15,8 +15,6 @@ class DatadiriController extends Controller
     {
         $this->middleware('permission:datadiri-list|datadiri-create|datadiri-edit|datadiri-delete', ['only' => ['index','store']]);
         $this->middleware('permission:datadiri-create', ['only' => ['create']]);
-        $this->middleware('permission:datadiri-store', ['only' => ['store']]);
-        $this->middleware('permission:datadiri-storekk', ['only' => ['storekk']]);
         $this->middleware(['auth','verified']);
     }
     public function create()

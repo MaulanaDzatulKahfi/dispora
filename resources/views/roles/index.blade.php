@@ -23,6 +23,11 @@
         @endif
         <!--Card-->
         <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+            @can('user-archive')
+                <div class="flex mb-2">
+                    <a href="{{ route('roles.create') }}" class="bg-green-600 text-white p-2 rounded-md hover:bg-green-700">Tambah</a>
+                </div>
+            @endcan
             <table id="dataTable" class="stripe hover text-gray-700 text-center" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
                 <thead>
                     <tr>

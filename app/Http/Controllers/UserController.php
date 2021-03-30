@@ -8,9 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use DB;
-use Hash;
-use Illuminate\Support\Arr;
 use DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -25,6 +24,11 @@ class UserController extends Controller
         $this->middleware('permission:user-create', ['only' => ['create','store']]);
         $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:user-archive', ['only' => ['archive']]);
+        $this->middleware('permission:user-restore', ['only' => ['restore']]);
+        $this->middleware('permission:user-restoreall', ['only' => ['restoreall']]);
+        $this->middleware('permission:user-permanent', ['only' => ['permanent']]);
+        $this->middleware('permission:user-permanentall', ['only' => ['permanentall']]);
         $this->middleware(['auth','verified']);
     }
 
@@ -32,8 +36,8 @@ class UserController extends Controller
     {
         $tittle = 'user';
         if ($request->ajax()) {
-            $user = User::latest()->get('*');
-            // $user = DB::table('users')->select('*')->get();
+            // $user = User::orderBy('id','DESC')->paginate(100);
+            $user = User::latest()->get();
             return Datatables::of($user)
                     ->addIndexColumn()
                     ->addColumn('action', function($user){
@@ -43,7 +47,7 @@ class UserController extends Controller
                                 <form action="'.route("users.destroy", $user->id).'" method="POST" class="bg-red-500 text-white rounded-full w-16 h-6 text-sm focus:outline-none text-center">
                                     '.csrf_field().'
                                     '. method_field('DELETE').'
-                                    <button type="submit" onclick="return confirm(`Yakin? Data Ini Akan Dihapus?`)">
+                                    <button type="submit" onclick="return confirm(`Yakin? Data Ini Akan Dihapus?`)" class="focus:outline-none">
                                         Hapus
                                     </button>
                                 </form>
@@ -61,50 +65,6 @@ class UserController extends Controller
         }
         return view('users.index',compact('tittle'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $tittle = 'role';
-        $roles = Role::pluck('name','name')->all();
-        return view('users.create',compact('roles', 'tittle'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
-            'roles' => 'required'
-        ]);
-
-        $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
-
-        $user = User::create($input);
-        $user->assignRole($request->input('roles'));
-
-        return redirect()->route('users.index')
-                        ->with('success','User created successfully');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $tittle = 'role';
@@ -113,35 +73,20 @@ class UserController extends Controller
         $userRole = $user->roles->pluck('name','name')->all();
         return view('users.edit',compact('user','roles','userRole', 'tittle'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
             'roles' => 'required'
         ]);
 
-        $input = $request->all();
-        if(!empty($input['password'])){
-            $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = Arr::except($input,array('password'));
-        }
-
         $user = User::find($id);
-        $user->update($input);
+        $user->update([
+            'roles' => $request->roles,
+        ]);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
-
         $user->assignRole($request->input('roles'));
 
-        return redirect()->route('users.index')
-                        ->with('success','User Berhasil DiUpdate!');
+        return redirect()->route('users.index')->with('success','User Berhasil DiUpdate!');
     }
 
     /**
@@ -153,7 +98,40 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::find($id)->delete();
-        return redirect()->route('users.index')
-                        ->with('success','User deleted successfully');
+        return redirect()->route('users.index')->with('success','User Berhasil Dihapus!');
+    }
+    public function archive()
+    {
+        $tittle = 'Sampah';
+        $users = User::onlyTrashed()->get();
+        return view('users.sampah', compact('users', 'tittle'));
+    }
+    public function restore($id)
+    {
+        $user = User::onlyTrashed()->where('id', $id);
+        $user->restore();
+
+        return redirect()->route('users.archive')->with('success', 'User Berhasil Dipulihkan!');
+    }
+    public function restoreall()
+    {
+        $user = User::onlyTrashed();
+        $user->restore();
+
+        return redirect()->route('users.archive')->with('success', 'Semua User Berhasil Dipulihkan!');
+    }
+    public function permanent($id)
+    {
+        $user = User::onlyTrashed()->where('id', $id);
+        $user->forceDelete();
+
+        return redirect()->route('users.archive')->with('success', 'User Berhasil Dihapus!');
+    }
+    public function permanentall()
+    {
+        $user = User::onlyTrashed();
+        $user->forceDelete();
+
+        return redirect()->route('users.archive')->with('success', 'Semua User Berhasil Dihapus!');
     }
 }
