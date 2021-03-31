@@ -47,16 +47,23 @@ class HomeController extends Controller
     public function profil()
     {
         $tittle = 'profil';
-        // $datadiri = Datadiri::find();
-        return view('profil', compact('tittle'));
+        $datadiri = Datadiri::where('user_id', Auth::user()->id)->first();
+        $kk = Kk::where('user_id', Auth::user()->id)->first();
+        $role = Auth::user()->getRoleNames();
+        return view('profil', compact('tittle', 'datadiri', 'kk', 'role'));
     }
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
+        $messages = [
+            'required' => ':attribute harus diisi!',
+        ];
+        $this->validate($request,[
+            'name' => 'required',
+        ], $messages);
 
         User::where('id', $id)->update([
             'name' => $request->name
         ]);
-        return redirect()->route('profil')->with('success', 'Nama Akun Berhasil Diupdate!');
+        return redirect()->route('profil')->with('success', 'Nama Akun Berhasil Diedit!');
     }
 }

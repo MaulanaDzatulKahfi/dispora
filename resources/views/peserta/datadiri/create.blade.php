@@ -17,9 +17,42 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .kuning{
+            color: #fff500;
+        }
+    </style>
 </head>
 <body>
-    <nav class="bg-white pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0 shadow-md">
+    <nav class="flex bg-green-600 justify-between">
+        <div class="text-xs flex py-3 px-7 kuning">
+            <div>
+                <a href="https://ahlibikin.website/">
+                    <span class="fa fa-graduation-cap"></span>
+                    Beranda
+                </a>
+            </div>
+            <div class="px-4">
+                <a href="https://ahlibikin.website/tentang-kami">
+                    <span class="fa fa-briefcase"></span>
+                    Tentang Kami
+                </a>
+            </div>
+            <div>
+                <a href="https://ahlibikin.website/faq">
+                    <span class="fa fa-comments"></span>
+                    FAQ
+                </a>
+            </div>
+            <div class="px-4">
+                <a href="#">
+                    <span class="fa fa-book"></span>
+                    Panduan
+                </a>
+            </div>
+        </div>
+    </nav>
+    {{-- <nav class="bg-white pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0 shadow-md">
         <div class="flex items-center justify-between">
             <div class="flex flex-shrink text-gray-800 font-semibold">
                 <img src="{{ asset('img/logo.jpg')}}" alt="logo" class="w-10 h-13 pt-1">
@@ -57,7 +90,7 @@
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav> --}}
 
 	<div x-data="app()" x-cloak>
 		<div class="max-w-xl mx-auto px-4">

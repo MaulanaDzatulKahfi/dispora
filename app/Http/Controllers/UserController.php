@@ -36,7 +36,6 @@ class UserController extends Controller
     {
         $tittle = 'user';
         if ($request->ajax()) {
-            // $user = User::orderBy('id','DESC')->paginate(100);
             $user = User::latest()->get();
             return Datatables::of($user)
                     ->addIndexColumn()
