@@ -51,7 +51,6 @@
 
 @section('script')
     <script>
-        // dataTable
         $(document).ready(function() {
             var table = $('#dataTable').DataTable({
                 processing: true,
@@ -81,7 +80,5 @@
                 ]
             }).columns.adjust().responsive.recalc();
         });
-
     </script>
 @endsection
-

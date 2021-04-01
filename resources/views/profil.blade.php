@@ -66,42 +66,42 @@
             @endif
             <div class="bg-white space-y-0">
                 @if($role[0] === 'Peserta')
-                <div class="md:inline-flex space-y-4 md:space-y-0 w-full p-4 text-gray-500 items-center">
-                    <h2 class="md:w-1/3 max-w-sm mx-auto">Personal Info</h2>
-                    <div class="md:w-2/3 max-w-sm mx-auto text-sm ">
-                        <table>
-                            <tr>
-                                <td class="w-20"><label class="text-gray-400">Nama</label></td>
-                                <td><label class="text-gray-800">{{ $datadiri->nama }}</label></td>
-                            </tr>
-                            <tr>
-                                <td class="w-20"><label class="text-gray-400">NIK</label></td>
-                                <td><label class="text-gray-800">{{ Str::substr($datadiri->nik, 0, 12).'XXXX' }}</label></td>
-                            </tr>
-                            <tr>
-                                <td class="w-20"><label class="text-gray-400">KK</label></td>
-                                <td><label class="text-gray-800">{{ Str::substr($kk->no_kk, 0, 12).'XXXX' }}</label></td>
-                            </tr>
-                            <tr>
-                                <td class="w-20"><label class="text-gray-400">Agama</label></td>
-                                <td><label class="text-gray-800">{{ $datadiri->agama }}</label></td>
-                            </tr>
-                            <tr>
-                                <td class="w-20"><label class="text-gray-400">Alamat</label></td>
-                                <td><label class="text-gray-800">{{ $datadiri->alamat }}</label></td>
-                            </tr>
-                            <tr>
-                                <td class="w-20"><label class="text-gray-400">Kecamatan</label></td>
-                                <td><label class="text-gray-800">{{ $datadiri->kecamatan }}</label></td>
-                            </tr>
-                            <tr>
-                                <td class="w-20"><label class="text-gray-400">Jenis Kelamin</label></td>
-                                <td><label class="text-gray-800">{{ $datadiri->jk }}</label></td>
-                            </tr>
-                        </table>
+                    <div class="md:inline-flex space-y-4 md:space-y-0 w-full p-4 text-gray-500 items-center">
+                        <h2 class="md:w-1/3 max-w-sm mx-auto">Personal Info</h2>
+                        <div class="md:w-2/3 max-w-sm mx-auto text-sm ">
+                            <table>
+                                <tr>
+                                    <td class="w-20"><label class="text-gray-400">Nama</label></td>
+                                    <td><label class="text-gray-800">{{ $datadiri->nama }}</label></td>
+                                </tr>
+                                <tr>
+                                    <td class="w-20"><label class="text-gray-400">NIK</label></td>
+                                    <td><label class="text-gray-800">{{ Str::substr($datadiri->nik, 0, 12).'XXXX' }}</label></td>
+                                </tr>
+                                <tr>
+                                    <td class="w-20"><label class="text-gray-400">KK</label></td>
+                                    <td><label class="text-gray-800">{{ Str::substr($kk->no_kk, 0, 12).'XXXX' }}</label></td>
+                                </tr>
+                                <tr>
+                                    <td class="w-20"><label class="text-gray-400">Agama</label></td>
+                                    <td><label class="text-gray-800">{{ $datadiri->agama }}</label></td>
+                                </tr>
+                                <tr>
+                                    <td class="w-20"><label class="text-gray-400">Alamat</label></td>
+                                    <td><label class="text-gray-800">{{ $datadiri->alamat }}</label></td>
+                                </tr>
+                                <tr>
+                                    <td class="w-20"><label class="text-gray-400">Kecamatan</label></td>
+                                    <td><label class="text-gray-800">{{ $datadiri->kecamatan }}</label></td>
+                                </tr>
+                                <tr>
+                                    <td class="w-20"><label class="text-gray-400">Jenis Kelamin</label></td>
+                                    <td><label class="text-gray-800">{{ $datadiri->jk }}</label></td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
-                </div>
-                <hr />
+                    <hr />
                 @endif
 
                 <div class="md:inline-flex  space-y-4 md:space-y-0  w-full p-4 text-gray-500 items-center">
@@ -134,7 +134,7 @@
                         </div>
                     </div>
                     <div>
-                        <form action="{{ route('profil.update', Auth::user()->id) }}" method="POST">
+                        <form action="{{ route('profil.update') }}" method="POST">
                             @csrf
                             @method('PATCH')
                             <label class="text-sm text-gray-400">Nama</label>
@@ -161,6 +161,9 @@
                                 value="{{ Auth::user()->name }}"
                                 />
                             </div>
+                            @error('name')
+                                <p class="text-xs italic text-red-500">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="md:w-3/12 float-none md:float-right md:pl-6">
                             <button type="submit" class="text-white w-full mx-auto max-w-sm rounded-md bg-green-600 py-2 px-4 inline-flex items-center focus:outline-none md:float-right">
@@ -213,7 +216,7 @@
         </div>
     </div>
 
-    <div class="main-modal fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster" style="background: rgba(0,0,0,.7);">
+    <div id="modal" class="main-modal fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster" style="background: rgba(0,0,0,.7);">
         <div class="border border-teal-500 shadow-lg modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
             <div class="modal-content py-4 text-left px-6">
                 <!--Title-->
@@ -230,36 +233,47 @@
                 </div>
                 <!--Body-->
                 <div class="my-5 mr-5 ml-5 flex justify-center">
-                    <form action="" method="POST"  class="w-full">
+                    <form action="{{ route('change.password') }}" method="POST" class="w-full">
+                        @csrf
                         <div class="">
-                            <div class="">
+                            <div class="mb-5">
                                 <label class="text-md text-gray-600">Password saat ini</label>
+                                <input type="password"
+                                name="password_saat_ini"
+                                class="h-2 p-6 w-full border-2 border-gray-300 rounded-md focus:outline-none @error('password_saat_ini') border-red-500 @enderror" required>
+                                @error('password_saat_ini')
+                                    <p class="text-xs italic text-red-500">{{ $message }}</p>
+                                @enderror
                             </div>
-                            <div class="">
-                                <input type="password" name="password" class="h-3 p-6 w-full border-2 border-gray-300 mb-5 rounded-md">
-                            </div>
-                            <div class="">
+                            <div class="mb-5">
                                 <label class="text-md text-gray-600">Password Baru</label>
+                                <input type="password"
+                                name="password_baru"
+                                class="h-2 p-6 w-full border-2 border-gray-300 rounded-md focus:outline-none @error('password_baru') border-red-500 @enderror" required>
+                                @error('password_baru')
+                                    <p class="text-xs italic text-red-500">{{ $message }}</p>
+                                @enderror
                             </div>
-                            <div class="">
-                                <input type="password" name="phone" class="h-3 p-6 w-full border-2 border-gray-300 mb-5 rounded-md" >
-                            </div>
-                            <div class="">
+                            <div class="mb-5">
                                 <label class="text-md text-gray-600">Konfirmasi Password Baru</label>
-                            </div>
-                            <div class="">
-                                <input type="password" name="id_number" class="h-3 p-6 w-full border-2 border-gray-300 mb-5 rounded-md">
+                                <input type="password"
+                                name="konfirmasi_password_baru"
+                                class="h-2 p-6 w-full border-2 border-gray-300 rounded-md focus:outline-none @error('konfirmasi_password_baru') border-red-500 @enderror" required>
+                                @error('konfirmasi_password_baru')
+                                    <p class="text-xs italic text-red-500">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
-                    </form>
+                    {{-- </form> --}}
                 </div>
                 <!--Footer-->
                 <div class="flex justify-end pt-2 space-x-14">
                     <button
-                        class="px-4 bg-gray-200 p-3 rounded text-black hover:bg-gray-300 font-semibold" onclick="modalClose('main-modal')">Cancel</button>
-                    <button
-                        class="px-4 bg-green-600 p-3 ml-3 rounded-lg text-white hover:bg-teal-400" onclick="validate_form(document.getElementById('add_caretaker_form'))">Edit</button>
+                        class="px-4 bg-gray-200 p-3 rounded text-black hover:bg-gray-300 font-semibold focus:outline-none" onclick="modalClose('main-modal')">Cancel</button>
+                    <button type="submit"
+                        class="px-4 bg-green-600 p-3 ml-3 rounded-lg text-white hover:bg-teal-400 focus:outline-none">Edit</button>
                 </div>
+            </form>
             </div>
         </div>
     </div>
@@ -267,16 +281,38 @@
 @endsection
 
 @section('script')
+    @if (count($errors) > 0)
+        <script>
+            all_modals = ['main-modal']
+            all_modals.forEach((modal)=>{
+                const modalSelected = document.querySelector('.'+modal);
+                modalSelected.classList.remove('fadeOut');
+                modalSelected.classList.add('fadeIn');
+                modalSelected.style.display = 'flex';
+            })
+        </script>
+    @else
+        <script>
+            all_modals = ['main-modal']
+            all_modals.forEach((modal)=>{
+                const modalSelected = document.querySelector('.'+modal);
+                modalSelected.classList.remove('fadeIn');
+                modalSelected.classList.add('fadeOut');
+                modalSelected.style.display = 'none';
+            })
+        </script>
+    @endif
+
     <script>
-        all_modals = ['main-modal']
-        all_modals.forEach((modal)=>{
-            const modalSelected = document.querySelector('.'+modal);
-            modalSelected.classList.remove('fadeIn');
-            modalSelected.classList.add('fadeOut');
-            modalSelected.style.display = 'none';
-        })
+        // all_modals = ['main-modal']
+        // all_modals.forEach((modal)=>{
+        //     const modalSelected = document.querySelector('.'+modal);
+        //     modalSelected.classList.remove('fadeIn');
+        //     modalSelected.classList.add('fadeOut');
+        //     modalSelected.style.display = 'none';
+        // })
         const modalClose = (modal) => {
-            const modalToClose = document.querySelector('.'+modal);
+            const modalToClose = document.querySelector('.main-modal');
             modalToClose.classList.remove('fadeIn');
             modalToClose.classList.add('fadeOut');
             setTimeout(() => {
@@ -285,11 +321,10 @@
         }
 
         const openModal = (modal) => {
-            const modalToOpen = document.querySelector('.'+modal);
+            const modalToOpen = document.querySelector('.main-modal');
             modalToOpen.classList.remove('fadeOut');
             modalToOpen.classList.add('fadeIn');
             modalToOpen.style.display = 'flex';
         }
-
     </script>
 @endsection

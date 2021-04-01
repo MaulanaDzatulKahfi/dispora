@@ -51,7 +51,6 @@ class RegisterController extends Controller
     {
         $messages = [
             'required' => ':attribute harus diisi!',
-            'numeric' => ':attribute harus diisi dengan angka!',
             'min' => 'password minimal 8 karakter',
             'unique' => ':attribute sudah terdaftar',
             'syarat.required' => 'Klik centang pada pernyataan persetujuan diatas.'

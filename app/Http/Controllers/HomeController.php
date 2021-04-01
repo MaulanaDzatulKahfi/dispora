@@ -32,6 +32,7 @@ class HomeController extends Controller
         $datadiri = Datadiri::where('user_id', $user_id)->first();
         $kk = Kk::where('user_id', $user_id)->first();
         $role = Auth::user()->getRoleNames();
+        $user = User::latest()->role(['Panitia', 'Peserta', 'Mitra'])->get();
 
         foreach($role as $r){
             if($r === 'Peserta'){
@@ -41,7 +42,7 @@ class HomeController extends Controller
                     return redirect()->route('datadiri.create');
                 }
             }
-            return view('home', compact('tittle', 'role'));
+            return view('home', compact('tittle', 'role', 'user'));
         }
     }
     public function profil()
@@ -52,16 +53,17 @@ class HomeController extends Controller
         $role = Auth::user()->getRoleNames();
         return view('profil', compact('tittle', 'datadiri', 'kk', 'role'));
     }
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $messages = [
             'required' => ':attribute harus diisi!',
+            'max' => ':attribute kepanjangan'
         ];
         $this->validate($request,[
-            'name' => 'required',
+            'name' => 'required|max:50',
         ], $messages);
 
-        User::where('id', $id)->update([
+        User::find(Auth::user()->id)->update([
             'name' => $request->name
         ]);
         return redirect()->route('profil')->with('success', 'Nama Akun Berhasil Diedit!');

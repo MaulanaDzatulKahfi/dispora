@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\DatadiriController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Auth\ChangePasswordController;
+use App\Http\Controllers\DatadiriController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\PermissionController;
@@ -21,14 +21,10 @@ use App\Http\Controllers\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 // Route::get('/', function () {
-//     return view('auth.login');
+//     return view('beranda');
 // });
-// Route::get('/', function(){
-//     $tittle = 'Dashboard';
-//     return view('beranda', compact('tittle'));
-// });
+
 
 Auth::routes();
 //verifikasi email
@@ -36,12 +32,12 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', [HomeController::class, 'index'])->middleware('verified')->name('home');
 
-
-
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);
     Route::get('profil', [HomeController::class, 'profil'])->name('profil');
-    Route::patch('profil/update/{profile}', [HomeController::class, 'update'])->name('profil.update');
+    Route::patch('profil/update', [HomeController::class, 'update'])->name('profil.update');
+    Route::post('change', [ChangePasswordController::class, 'index'])->name('change.password');
+
     //user
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/{users}/edit', [UserController::class, 'edit'])->name('users.edit');

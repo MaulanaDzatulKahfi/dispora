@@ -36,7 +36,7 @@ class UserController extends Controller
     {
         $tittle = 'user';
         if ($request->ajax()) {
-            $user = User::latest()->get();
+            $user = User::latest()->role(['Panitia', 'Peserta', 'Mitra'])->get();
             return Datatables::of($user)
                     ->addIndexColumn()
                     ->addColumn('action', function($user){
@@ -56,7 +56,9 @@ class UserController extends Controller
                     })
                     ->addColumn('role', function($user){
                         foreach ($user->getRoleNames() as $v ) {
-                            return $v;
+                            if($v != "Admin"){
+                                return $v;
+                            }
                         }
                     })
                     ->rawColumns(['action'])
@@ -66,7 +68,7 @@ class UserController extends Controller
     }
     public function edit($id)
     {
-        $tittle = 'role';
+        $tittle = 'user';
         $user = User::find($id);
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
