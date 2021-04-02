@@ -5,19 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Jurusan extends Model
+class Fakultas extends Model
 {
     use HasFactory;
-
-    protected $table = 'jurusan';
-    protected $fillable = ['name', 'fakultas_id', 'perting_id'];
+    protected $table = 'fakultas';
+    protected $fillable = ['name', 'status', 'perting_id'];
 
     public function perting()
     {
         return $this->belongsTo(Perting::class);
     }
-    public function fakultas()
+    public function jurusan()
     {
-        return $this->belongsTo(Fakultas::class);
+        return $this->hasMany(Jurusan::class);
     }
 }

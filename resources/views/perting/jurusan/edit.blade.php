@@ -4,7 +4,7 @@
     <div class="flex bg-green-600 p-4 shadow justify-between">
         <div class="text-xl text-white">
             <h3 class="font-bold pl-2">
-                <a href="{{ route('jurusan.index', $jurusan->perting->id) }}" class="hover:text-gray-200">{{ $jurusan->perting->name }}</a> / <a href="{{ route('jurusan.create', $jurusan->perting->id) }}" class="hover:text-gray-200">Jurusan</a>
+                <a href="{{ route('perting.index') }}">{{ $jurusan->perting->name }}</a> / <a href="{{ route('fakultas.index', $jurusan->perting->id) }}">{{ $jurusan->fakultas->name }}</a> / <a href="{{ route('jurusan.index', $jurusan->fakultas->id) }}">Jurusan</a>
             </h3>
         </div>
     </div>
@@ -31,7 +31,7 @@
                         </div>
 
                         <div class="mb-1 mt-10 flex justify-between">
-                            <a href="{{ route('jurusan.index', $jurusan->perting->id) }}" class="px-4 py-2 rounded-md bg-gray-200 focus:bg-gray-400 focus:outline-none">Kembali</a>
+                            <a href="{{ route('jurusan.index', $jurusan->fakultas->id) }}" class="px-4 py-2 rounded-md bg-gray-200 focus:bg-gray-400 focus:outline-none">Kembali</a>
                             <input type="submit" class="px-4 py-2 rounded-md text-white bg-green-600 focus:bg-green-800 focus:outline-none" value="Edit">
                         </div>
                     </form>

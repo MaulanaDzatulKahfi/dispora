@@ -17,12 +17,16 @@ class Perting extends Model
      */
 
     protected $fillable = [
-        'npsn', 'name'
+        'kode_pt', 'name', 'status_pt', 'tgl_berdiri', 'sk_pt', 'tgl_sk_pt', 'alamat', 'kelurahan', 'kecamatan', 'kota', 'provinsi', 'kode_pos', 'tlp', 'email', 'website'
     ];
     protected $table = "perting";
 
     public function jurusan()
     {
         return $this->hasMany(Jurusan::class);
+    }
+    public function fakultas()
+    {
+        return $this->hasMany(Fakultas::class);
     }
 }

@@ -42,10 +42,24 @@ class PertingController extends Controller
             'required' => ':attribute harus diisi!',
             'numeric' => ':attribute harus diisi dengan angka!',
             'unique' => ':attribute sudah ada!',
+            'date' => ':attribute format harus date'
         ];
         $this->validate($request,[
-            'npsn' => 'required|numeric|unique:perting',
+            'kode_pt' => 'required|numeric|unique:perting',
             'name' => 'required',
+            'status_pt' => 'required',
+            'tgl_berdiri' => 'required|date',
+            'sk_pt' => 'required',
+            'tgl_sk_pt' => 'required|date',
+            'alamat' => 'required',
+            'kelurahan' => 'required',
+            'kecamatan' => 'required',
+            'kota' => 'required',
+            'provinsi' => 'required',
+            'kode_pos' => 'required|numeric',
+            'tlp' => 'required|numeric',
+            'email' => 'required|email',
+            'website' => 'required',
         ], $messages);
         Perting::create($request->all());
         return redirect()->route('perting.index')->with('success', 'Perguruan Tinggi Berhasil Ditambahkan!');
@@ -60,11 +74,24 @@ class PertingController extends Controller
         $messages = [
             'required' => ':attribute harus diisi!',
             'numeric' => ':attribute harus diisi dengan angka!',
-            'unique' => ':attribute sudah ada!',
+            'date' => ':attribute format harus date'
         ];
         $this->validate($request,[
-            'npsn' => 'required|numeric|unique:perting',
+            'kode_pt' => 'required|numeric',
             'name' => 'required',
+            'status_pt' => 'required',
+            'tgl_berdiri' => 'required|date',
+            'sk_pt' => 'required',
+            'tgl_sk_pt' => 'required|date',
+            'alamat' => 'required',
+            'kelurahan' => 'required',
+            'kecamatan' => 'required',
+            'kota' => 'required',
+            'provinsi' => 'required',
+            'kode_pos' => 'required|numeric',
+            'tlp' => 'required|numeric',
+            'email' => 'required|email',
+            'website' => 'required',
         ], $messages);
 
         $perting->update($request->all());
@@ -79,47 +106,47 @@ class PertingController extends Controller
                         ->with('success', $perting->name. ' Berhasil Dihapus!');
     }
     // 4. Soft Delete Permanent
-    public function permanent($id)
-    {
-        $products = Perting::onlyTrashed()->where('id',$id);
-        $products->forceDelete();
+    // public function permanent($id)
+    // {
+    //     $products = Perting::onlyTrashed()->where('id',$id);
+    //     $products->forceDelete();
 
-        return redirect()->route('products.archive')
-                        ->with('success','Product deleted Permanently successfully');
-    }
-
-
-    // 5. Soft Delete Archive
-    public function archive()
-    {
-        $products = Perting::onlyTrashed()->get();
-        //return view('products.archive', ['products' => $products]);
-        return view('products.archive',compact('products'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
-
-    }
+    //     return redirect()->route('products.archive')
+    //                     ->with('success','Product deleted Permanently successfully');
+    // }
 
 
-     // 6. Soft Delete Restore
-    public function restore($id)
-    {
-            $products = Perting::onlyTrashed()->where('id',$id);
-            $products->restore();
+    // // 5. Soft Delete Archive
+    // public function archive()
+    // {
+    //     $products = Perting::onlyTrashed()->get();
+    //     //return view('products.archive', ['products' => $products]);
+    //     return view('products.archive',compact('products'))
+    //         ->with('i', (request()->input('page', 1) - 1) * 5);
 
-            return redirect()->route('products.archive')
-                        ->with('success','Product Restore successfully');
-    }
+    // }
 
 
-    // 7. Soft Delete Restore All
-    public function restoreall()
-    {
-            $perting = Perting::onlyTrashed();
-            $perting->restore();
+    //  // 6. Soft Delete Restore
+    // public function restore($id)
+    // {
+    //         $products = Perting::onlyTrashed()->where('id',$id);
+    //         $products->restore();
 
-            return redirect()->route('products.archive')
-                        ->with('success','Product Restore successfully');
-    }
+    //         return redirect()->route('products.archive')
+    //                     ->with('success','Product Restore successfully');
+    // }
+
+
+    // // 7. Soft Delete Restore All
+    // public function restoreall()
+    // {
+    //         $perting = Perting::onlyTrashed();
+    //         $perting->restore();
+
+    //         return redirect()->route('products.archive')
+    //                     ->with('success','Product Restore successfully');
+    // }
 
 
 

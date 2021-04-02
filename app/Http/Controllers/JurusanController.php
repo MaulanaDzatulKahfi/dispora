@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fakultas;
 use App\Models\Jurusan;
 use App\Models\Perting;
 use Illuminate\Http\Request;
@@ -19,16 +20,16 @@ class JurusanController extends Controller
     public function index($id)
     {
         $tittle = 'Jurusan';
-        $perting = Perting::find($id);
-        $jurusan = Jurusan::where('perting_id', $id)->get();
-        return view('perting.jurusan.index', compact('tittle', 'perting', 'jurusan'));
+        $fakultas = Fakultas::find($id);
+        $jurusan = Jurusan::where('fakultas_id', $id)->get();
+        return view('perting.jurusan.index', compact('tittle', 'fakultas', 'jurusan'));
     }
-    public function create(Perting $perting)
+    public function create(Fakultas $fakultas)
     {
-        $tittle = 'perting';
-        return view('perting.jurusan.create', compact('perting', 'tittle'));
+        $tittle = 'jurusan';
+        return view('perting.jurusan.create', compact('fakultas', 'tittle'));
     }
-    public function store(Request $request, Perting $perting)
+    public function store(Request $request, Fakultas $fakultas)
     {
         $messages = [
             'required' => ':attribute harus diisi!',
@@ -38,9 +39,10 @@ class JurusanController extends Controller
         ], $messages);
         Jurusan::create([
             'name' => $request->name,
-            'perting_id' => $perting->id
+            'fakultas_id' => $fakultas->id,
+            'perting_id' => $fakultas->perting->id
         ]);
-        return redirect()->route('jurusan.index', $perting->id)->with('success', 'Jurusan Berhasil Ditambahkan!');
+        return redirect()->route('jurusan.index', $fakultas->id)->with('success', 'Jurusan Berhasil Ditambahkan!');
     }
     public function edit(Jurusan $jurusan)
     {
@@ -58,13 +60,13 @@ class JurusanController extends Controller
 
         $jurusan->update($request->all());
 
-        return redirect()->route('jurusan.index', $jurusan->perting->id)
+        return redirect()->route('jurusan.index', $jurusan->fakultas->id)
                         ->with('success', 'Jurusan Berhasil Diupdate!');
     }
     public function destroy(Jurusan $jurusan)
     {
         $jurusan->delete();
-        return redirect()->route('jurusan.index', $jurusan->perting->id)
+        return redirect()->route('jurusan.index', $jurusan->fakultas->id)
                         ->with('success', 'Jurusan Berhasil Dihapus!');
     }
 }

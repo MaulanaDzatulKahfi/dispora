@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Datadiri extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
     protected $table = 'datadiri';
-    protected $fillable = ['nik', 'nama', 'tempat', 'tgl_lahir', 'jk', 'alamat', 'kecamatan', 'agama', 'status_perkawinan', 'pekerjaan', 'foto_ktp', 'user_id'];
-    protected $dates = ['deleted_at'];
+    protected $fillable = ['nik', 'nama', 'tempat', 'tgl_lahir', 'jk', 'alamat', 'agama', 'status_perkawinan', 'pekerjaan', 'foto_ktp', 'foto_akta', 'user_id', 'kecamatan_id'];
+    // protected $dates = ['deleted_at'];
 }

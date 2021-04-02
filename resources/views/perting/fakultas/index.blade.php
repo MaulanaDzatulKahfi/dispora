@@ -12,7 +12,7 @@
 @section('content')
     <div class="bg-green-600 p-4 shadow text-xl text-white">
         <h3 class="font-bold pl-2">
-            <a href="{{ route('perting.index') }}">{{ $fakultas->perting->name }}</a> / <a href="{{ route('fakultas.index', $fakultas->perting_id) }}">{{ $fakultas->name }}</a> / <a href="{{ route('jurusan.index', $fakultas->id) }}">Jurusan</a>
+            <a href="{{ route('perting.index') }}">{{ $perting->name }}</a> / <a href="{{ route('fakultas.index', $perting->id) }}">Fakultas</a>
         </h3>
     </div>
 
@@ -26,34 +26,37 @@
         <!--Card-->
         <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
             <div class="flex mb-2">
-                <a href="{{ route('jurusan.create', $fakultas->id) }}" class="bg-green-600 text-white p-2 rounded-md hover:bg-green-700">tambah</a>
+                <a href="{{ route('fakultas.create', $perting->id) }}" class="bg-green-600 text-white p-2 rounded-md hover:bg-green-700">tambah</a>
             </div>
             <table id="dataTable" class="stripe hover text-gray-700 text-center" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
                 <thead>
                     <tr>
                         <th data-priority="1">No</th>
                         <th data-priority="2">Nama</th>
+                        <th data-priority="2">Status</th>
                         <th data-priority="3">Aksi</th>
                     </tr>
                 </thead>
                     <tbody>
-                        @foreach ($jurusan as $key => $j)
+                        @foreach ($fakultas as $key => $j)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $j->name }}</td>
+                                <td>{{ $j->status }}</td>
                                 <td class="flex justify-center">
-                                @can('jurusan-edit')
-                                    <a class="bg-blue-500 text-white rounded-full w-16 h-6 text-sm focus:outline-none hover:bg-blue-700" href="{{ route('jurusan.edit', $j->id) }}">edit</a>
-                                @endcan
-                                @can('jurusan-delete')
-                                    <form action="{{ route('jurusan.destroy', $j->id) }}" method="POST">
+                                    <a class="bg-yellow-400 text-white rounded-full w-16 h-6 text-sm focus:outline-none hover:bg-yellow-600" href="{{ route('jurusan.index', $j->id) }}">Jurusan</a>
+                                {{-- @can('jurusan-edit') --}}
+                                    <a class="bg-blue-500 text-white rounded-full w-16 h-6 text-sm focus:outline-none hover:bg-blue-700" href="{{ route('fakultas.edit', $j->id) }}">edit</a>
+                                {{-- @endcan
+                                @can('jurusan-delete') --}}
+                                    <form action="{{ route('fakultas.destroy', $j->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="bg-red-500 text-white rounded-full w-16 h-6 text-sm focus:outline-none hover:bg-red-700" onclick="return confirm('Yakin? Data Ini Akan DiHapus?')">
                                             hapus
                                         </button>
                                     </form>
-                                @endcan
+                                {{-- @endcan --}}
                                 </td>
                             </tr>
                         @endforeach

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJurusanTable extends Migration
+class CreateKtpOrtuTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateJurusanTable extends Migration
      */
     public function up()
     {
-        Schema::create('jurusan', function (Blueprint $table) {
+        Schema::create('ktp_ortu', function (Blueprint $table) {
             $table->id();
+            $table->string('nik', 16);
             $table->string('name');
-            $table->unsignedBigInteger('fakultas_id');
-            $table->unsignedBigInteger('perting_id');
-            $table->foreign('perting_id')->references('id')->on('perting');
-            $table->foreign('fakultas_id')->references('id')->on('fakultas');
+            $table->string('foto_ktp_ortu');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            // $table->softDeletes()->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateJurusanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jurusan');
+        Schema::dropIfExists('ktp_ortu');
     }
 }

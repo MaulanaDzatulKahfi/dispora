@@ -30,8 +30,9 @@
                 <thead>
                     <tr>
                         <th data-priority="1">No</th>
-                        <th data-priority="2">Npsn</th>
+                        <th data-priority="2">Kode PT</th>
                         <th data-priority="2">Nama</th>
+                        <th data-priority="2">Status PT</th>
                         <th data-priority="3">Aksi</th>
                     </tr>
                 </thead>
@@ -39,12 +40,13 @@
                     @foreach ($perting as $key => $p)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $p->npsn }}</td>
+                            <td>{{ $p->kode_pt }}</td>
                             <td>{{ $p->name }}</td>
+                            <td>{{ $p->status_pt }}</td>
                             <td class="flex justify-center">
-                            @can('jurusan-list')
-                                <a class="bg-yellow-400 text-white rounded-full w-16 h-6 text-sm focus:outline-none hover:bg-yellow-600" href="{{ route('jurusan.index', $p->id) }}">jurusan</a>
-                            @endcan
+                            {{-- @can('jurusan-list') --}}
+                                <a class="bg-yellow-400 text-white rounded-full w-16 h-6 text-sm focus:outline-none hover:bg-yellow-600" href="{{ route('fakultas.index', $p->id) }}">Fakultas</a>
+                            {{-- @endcan --}}
                             @can('perting-edit')
                                 <a class="bg-blue-500 text-white rounded-full w-16 h-6 text-sm focus:outline-none hover:bg-blue-700" href="{{ route('perting.edit',$p->id) }}">edit</a>
                             @endcan

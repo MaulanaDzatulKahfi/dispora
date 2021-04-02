@@ -7,6 +7,7 @@
     @foreach($role as $r)
         @if($r === 'Admin')
             <div class="flex flex-wrap">
+
                 <div class="w-full md:w-1/2 xl:w-1/3 p-6">
                     <!--Metric Card-->
                     <div class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5">
@@ -16,12 +17,42 @@
                             </div>
                             <div class="flex-1 text-right md:text-center">
                                 <h5 class="font-bold uppercase text-gray-600">Total Users</h5>
-                                <h3 class="font-bold text-3xl">249 <span class="text-green-500"><i class="fas fa-exchange-alt"></i></span></h3>
+                                <h3 class="font-bold text-3xl">{{ count($user) }} <span class="text-green-500"><i class="fas fa-exchange-alt"></i></span></h3>
                             </div>
                         </div>
                     </div>
                     <!--/Metric Card-->
                 </div>
+
+                <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                    <!--Metric Card-->
+                    <div class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5">
+                        <div class="flex flex-row items-center">
+                            <div class="flex-shrink pr-4">
+                                <div class="rounded-full p-5 bg-green-600"><i class="fas fa-users fa-2x fa-inverse"></i></div>
+                            </div>
+                            <div class="flex-1 text-right md:text-center">
+                                <h5 class="font-bold uppercase text-gray-600">Total Users</h5>
+                                <h3 class="font-bold text-3xl">{{ count($user) }} <span class="text-green-500"><i class="fas fa-exchange-alt"></i></span></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/Metric Card-->
+                </div>
+
+                <div class="w-full xl:w-1/3 p-6">
+                    <!--Graph Card-->
+                    <div class="bg-white border-transparent rounded-lg shadow-xl">
+                        <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                            <h5 class="font-bold uppercase text-gray-600">Graph</h5>
+                        </div>
+                        <div class="p-5">
+                            <canvas id="chart" class="chart" width="undefined" height="undefined"></canvas>
+                        </div>
+                    </div>
+                    <!--/Graph Card-->
+                </div>
+
             </div>
         @endif
 
@@ -48,5 +79,50 @@
                 </div>
             </div>
         @endif
+
     @endforeach
+@endsection
+
+@section('script')
+    <script>
+        var ctx = document.getElementById('chart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [
+                "01-01-2021", "02-01-2021", "03-01-2021", "04-01-2021", "05-01-2021", "06-01-2021", "07-01-2021",
+                "08-01-2021", "09-01-2021", "10-01-2021", "11-01-2021", "12-01-2021", "13-01-2021", "14-01-2021",
+                "15-01-2021", "16-01-2021", "17-01-2021", "18-01-2021", "19-01-2021", "20-01-2021", "21-01-2021",
+                "22-01-2021", "23-01-2021", "24-01-2021", "25-01-2021", "26-01-2021", "27-01-2021", "28-01-2021",
+                "29-01-2021", "30-01-2021", "31-01-2021"
+                ],
+            datasets: [{
+                data: [86,114,106,106,107,111,133],
+                label: "Total",
+                borderColor: "#3e95cd",
+                backgroundColor: "#7bb6dd",
+                fill: false,
+            }, {
+                data: [70,90,44,60,83,90,100],
+                label: "Accepted",
+                borderColor: "#3cba9f",
+                backgroundColor: "#71d1bd",
+                fill: false,
+            }, {
+                data: [10,21,60,44,17,21,17],
+                label: "Pending",
+                borderColor: "#ffa500",
+                backgroundColor:"#ffc04d",
+                fill: false,
+            }, {
+                data: [6,3,2,2,7,0,16],
+                label: "Rejected",
+                borderColor: "#c45850",
+                backgroundColor:"#d78f89",
+                fill: false,
+            }
+            ]
+        },
+        });
+    </script>
 @endsection

@@ -52,45 +52,6 @@
             </div>
         </div>
     </nav>
-    {{-- <nav class="bg-white pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0 shadow-md">
-        <div class="flex items-center justify-between">
-            <div class="flex flex-shrink text-gray-800 font-semibold">
-                <img src="{{ asset('img/logo.jpg')}}" alt="logo" class="w-10 h-13 pt-1">
-                <a href="{{ route('home') }}">
-                    <span class="text-sm pl-2 md:text-xl">BEASISWA</span><br>
-                    <span class="text-xs pl-2">PANCAKARSA</span>
-                </a>
-            </div>
-
-            <div class="">
-                <span class="fa fa-home text-green-600"></span><a href="https://ahlibikin.website" class="text-green-600">Home</a>
-            </div>
-
-            <div class="flex">
-                <ul class="list-reset flex flex-1 md:flex-none">
-                    <li class="flex-1 md:flex-none md:mr-3">
-                        <div class="relative inline-block">
-                            <button onclick="toggleDD('myDropdown')" class="drop-button text-gray-600 font-semibold focus:outline-none text-sm lg:text-lg">
-                                {{ Auth::user()->name }}
-                                <svg class="h-4 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
-                            </button>
-                            <div id="myDropdown" class="dropdownlist absolute bg-white text-gray-500 right-0 mt-3 p-3 overflow-auto z-30 invisible">
-                                <a href="#" class="p-2 text-gray-500 text-sm no-underline hover:no-underline block"><i class="fa fa-user fa-fw"></i> Profile</a>
-                                <a href="#" class="p-2 text-gray-500 text-sm no-underline hover:no-underline block"><i class="fa fa-cog fa-fw"></i> Settings</a>
-                                <a href="{{ route('logout') }}" class="p-2 text-gray-500 text-sm no-underline hover:no-underline block"
-                                onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt fa-fw"></i> Log Out</a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav> --}}
 
 	<div x-data="app()" x-cloak>
 		<div class="max-w-xl mx-auto px-4">
@@ -103,8 +64,11 @@
                     <div>
                         <button @click="step = 2" class="text-lg font-bold text-gray-700 leading-tight focus:outline-none">Kartu Keluarga</button>
                     </div>
+                    <div>
+                        <button @click="step = 3" class="text-lg font-bold text-gray-700 leading-tight focus:outline-none">KTP Orang Tua</button>
+                    </div>
                 </div>
-                <div class="border-b-4 border-green-600" :style="'width: '+ parseInt(step / 2 * 100) +'%'"></div>
+                <div class="border-b-4 border-green-600" :style="'width: '+ parseInt(step / 3 * 100) +'%'"></div>
 				<!-- /Top Navigation -->
 
                 @if (session('berhasil'))
@@ -115,6 +79,15 @@
                 @if (session('gagal'))
                     <div class="bg-red-100 border-l-4 border-red-600 text-red-700 p-3 mt-3" role="alert">
                         {{ session('gagal') }}
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="bg-red-100 border-l-4 border-red-600 text-red-700 p-3 mt-3">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 @endif
 
@@ -197,13 +170,9 @@
                             <div class="mb-3">
                                 <label for="kecamatan" class="font-bold text-xs mb-1 text-gray-700 block">Kecamatan</label>
                                 <select name="kecamatan" class="w-full px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium mt-1 text-xs">
-                                    <option value="Cibinong">Cibinong</option>
-                                    <option value="Gunung Putri">Gunung Putri</option>
-                                    <option value="Citeuteup">Citeuteup</option>
-                                    <option value="Sukaraja">Sukaraja</option>
-                                    <option value="Babakan Madang">Babakan Madang</option>
-                                    <option value="Jonggol">Jonggol</option>
-                                    <option value="Cibinong">Cibinong</option>
+                                    @foreach($kecamatan as $k)
+                                        <option value="{{ $k->id }}">{{ $k->name }}</option>
+                                    @endforeach
                                 </select>
                                 @error('kecamatan')
                                     <p class="text-xs italic text-red-500">{{ $message }}</p>
@@ -259,6 +228,16 @@
                                     <p class="text-xs italic text-red-500">{{ $message }}</p>
                                 @enderror
                             </div>
+
+                            <div class="mb-3">
+                                <label for="foto" class="font-bold text-xs mb-1 text-gray-700 block">Foto Akta Kelahiran</label>
+                                <input type="file"
+                                class="focus:outline-none focus:shadow-outline text-gray-600 font-medium mt-1 text-xs"
+                                name="foto_akta" required>
+                                @error('foto_akta')
+                                    <p class="text-xs italic text-red-500">{{ $message }}</p>
+                                @enderror
+                            </div>
                             <div class="mt-5 text-right">
                                 <button
                                 class="w-32 focus:outline-none border border-transparent py-2 px-4 rounded-lg shadow-sm text-center text-white bg-green-500 hover:bg-green-700 font-medium"
@@ -299,29 +278,51 @@
 
 					</div>
 
+					<div x-show.transition.in="step === 3">
+
+						<div class="mb-10">
+                            <form action="{{ route('store.ktp.ortu') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="nik" class="font-bold text-xs mb-1 text-gray-700">NIK</label>
+                                    <input type="number"
+                                        class="w-full px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium mt-1 focus:ring-green-600 text-xs @error('nik') border-red-500 @enderror" name="nik" placeholder="NIK" value="{{ old('nik') }}" autofocus required>
+                                    @error('nik')
+                                        <p class="text-xs italic text-red-500">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="no_kk" class="font-bold text-xs mb-1 text-gray-700">Nama</label>
+                                    <input type="text"
+                                        class="w-full px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium mt-1 focus:ring-green-600 text-xs @error('name') border-red-500 @enderror" name="name" placeholder="Nama" value="{{ old('name') }}" autofocus required>
+                                    @error('name')
+                                        <p class="text-xs italic text-red-500">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="foto_ktp" class="font-bold text-xs mb-1 text-gray-700 block">Foto KTP Orang Tua</label>
+                                    <input type="file"
+                                        class="focus:outline-none focus:shadow-outline text-gray-600 font-medium mt-1 text-xs" name="foto_ktp_ortu" required>
+                                    @error('foto_ktp_ortu')
+                                        <p class="text-xs italic text-red-500">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="mt-5 text-right">
+                                    <button class="w-32 focus:outline-none border border-transparent py-2 px-4 rounded-lg shadow-sm text-center text-white bg-green-500 hover:bg-green-700 font-medium"
+                                    type="submit">Kirim</button>
+                                </div>
+                            </form>
+						</div>
+
+					</div>
+
 				</div>
 				<!-- / Step Content -->
 			</div>
 		</div>
 	</div>
-
-    <script>
-        /*Toggle dropdown list*/
-        function toggleDD(myDropMenu) {
-            document.getElementById(myDropMenu).classList.toggle("invisible");
-        }
-        window.onclick = function(event) {
-            if (!event.target.matches('.drop-button') && !event.target.matches('.drop-search')) {
-                var dropdowns = document.getElementsByClassName("dropdownlist");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (!openDropdown.classList.contains('invisible')) {
-                        openDropdown.classList.add('invisible');
-                    }
-                }
-            }
-        }
-    </script>
 	<script>
 		function app() {
 			return {

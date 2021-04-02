@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\DatadiriController;
+use App\Http\Controllers\FakultasController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\PermissionController;
@@ -21,9 +22,9 @@ use App\Http\Controllers\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('/', function () {
-//     return view('beranda');
-// });
+Route::get('/', function () {
+    return view('beranda');
+});
 
 
 Auth::routes();
@@ -53,6 +54,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('datadiri/create', [DatadiriController::class, 'create'])->name('datadiri.create');
     Route::post('datadiri/store', [DatadiriController::class, 'store'])->name('datadiri.store');
     Route::post('datadiri/storekk', [DatadiriController::class, 'storekk'])->name('datadiri.storekk');
+    Route::post('datadiri/storektp', [DatadiriController::class, 'storektp'])->name('store.ktp.ortu');
 
     //perguruan tinggi
     Route::get('products/archive', [ProductController::class, 'archive'])->name('products.archive');
@@ -65,10 +67,18 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('products/restore/{id}', [ProductController::class, 'restore'])->name('products.restore'); // Soft delete restore
     Route::get('products/restoreall', [ProductController::class, 'restoreall'])->name('products.restoreall'); // Soft delete restore all
 
+    //fakultas
+    Route::get('fakultas/{perting}', [FakultasController::class, 'index'])->name('fakultas.index');
+    Route::get('fakultas/create/{perting}', [FakultasController::class, 'create'])->name('fakultas.create');
+    Route::post('fakultas/store/{perting}', [FakultasController::class, 'store'])->name('fakultas.store');
+    Route::get('fakultas/{fakultas}/edit', [FakultasController::class, 'edit'])->name('fakultas.edit');
+    Route::patch('fakultas/{fakultas}', [FakultasController::class, 'update'])->name('fakultas.update');
+    Route::delete('fakultas/{fakultas}', [FakultasController::class, 'destroy'])->name('fakultas.destroy');
+
     //jurusan
-    Route::get('jurusan/{jurusan}', [JurusanController::class, 'index'])->name('jurusan.index');
-    Route::get('jurusan/create/{perting}', [JurusanController::class, 'create'])->name('jurusan.create');
-    Route::post('jurusan/store{perting}', [JurusanController::class, 'store'])->name('jurusan.store');
+    Route::get('jurusan/{fakultas}', [JurusanController::class, 'index'])->name('jurusan.index');
+    Route::get('jurusan/create/{fakultas}', [JurusanController::class, 'create'])->name('jurusan.create');
+    Route::post('jurusan/store/{fakultas}', [JurusanController::class, 'store'])->name('jurusan.store');
     Route::get('jurusan/{jurusan}/edit', [JurusanController::class, 'edit'])->name('jurusan.edit');
     Route::patch('jurusan/{jurusan}', [JurusanController::class, 'update'])->name('jurusan.update');
     Route::delete('jurusan/{jurusan}', [JurusanController::class, 'destroy'])->name('jurusan.destroy');

@@ -4,7 +4,7 @@
     <div class="flex bg-green-600 p-4 shadow justify-between">
         <div class="text-xl text-white">
             <h3 class="font-bold pl-2">
-                <a href="{{ route('jurusan.index', $perting->id) }}" class="hover:text-gray-200">{{ $perting->name }}</a> / <a href="{{ route('jurusan.create', $perting->id) }}" class="hover:text-gray-200">Jurusan</a>
+                <a href="{{ route('perting.index') }}" class="hover:text-gray-200">{{ $fakultas->perting->name }}</a> / <a href="{{ route('fakultas.index', $fakultas->perting->id) }}" class="hover:text-gray-200">{{ $fakultas->name }}</a> / <a href="{{ route('jurusan.index', $fakultas->id) }}" class="hover:text-gray-200">Jurusan</a>
             </h3>
         </div>
     </div>
@@ -16,7 +16,7 @@
                     <h1 class=" text-xl font-semibold text-gray-700 dark:text-gray-200">Form Tambah Jurusan</h1>
                 </div>
                 <div class="m-7">
-                    <form action="{{ route('jurusan.store', $perting->id) }}" method="POST">
+                    <form action="{{ route('jurusan.store', $fakultas->id) }}" method="POST">
                         @csrf
                         <div class="mb-4">
                             <label for="name" class="block mb-2 text-sm text-gray-600 text-sm font-bold">Nama</label>
@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="mb-1 mt-10 flex justify-between">
-                            <a href="{{ route('jurusan.index', $perting->id) }}" class="px-4 py-2 rounded-md bg-gray-200 focus:bg-gray-400 focus:outline-none">Kembali</a>
+                            <a href="{{ route('jurusan.index', $fakultas->id) }}" class="px-4 py-2 rounded-md bg-gray-200 focus:bg-gray-400 focus:outline-none">Kembali</a>
                             <input type="submit" class="px-4 py-2 rounded-md text-white bg-green-600 focus:bg-green-800 focus:outline-none" value="Tambah">
                         </div>
                     </form>
