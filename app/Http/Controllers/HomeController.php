@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Datadiri;
 use App\Models\Kk;
-use App\Models\ktp_ortu;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -34,7 +33,6 @@ class HomeController extends Controller
         $user_id = Auth::user()->id;
         $datadiri = Datadiri::where('user_id', $user_id)->first();
         $kk = Kk::where('user_id', $user_id)->first();
-        $ktp_ortu = ktp_ortu::where('user_id', $user_id)->first();
         $role = Auth::user()->getRoleNames();
         $user = User::latest()->role(['Panitia', 'Peserta', 'Mitra'])->get();
         $record = User::select(\DB::raw("COUNT(*) as count"), \DB::raw("DAYNAME(created_at) as day_name"), \DB::raw("DAY(created_at) as day"))
@@ -53,7 +51,7 @@ class HomeController extends Controller
 
         foreach($role as $r){
             if($r === 'Peserta'){
-                if ($datadiri && $kk && $ktp_ortu) {
+                if ($datadiri && $kk) {
                     return view('home', compact('tittle', 'role'));
                 }else{
                     return redirect()->route('datadiri.create');

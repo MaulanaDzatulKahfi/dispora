@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Datadiri;
 use App\Models\Kecamatan;
 use App\Models\Kk;
-use App\Models\Ktp_ortu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -24,13 +23,12 @@ class DatadiriController extends Controller
         $user_id = Auth::user()->id;
         $datadiri = Datadiri::where('user_id', $user_id)->first();
         $kk = Kk::where('user_id', $user_id)->first();
-        $ktp_ortu = Ktp_ortu::where('user_id', $user_id)->first();
         $role = Auth::user()->getRoleNames();
         $kecamatan = Kecamatan::all();
 
         foreach($role as $r){
             if($r === 'Peserta'){
-                if ($datadiri && $kk && $ktp_ortu) {
+                if ($datadiri && $kk) {
                     return redirect()->route('home');
                 }else{
                     return view('peserta.datadiri.create', compact('tittle', 'kecamatan'));
@@ -155,51 +153,11 @@ class DatadiriController extends Controller
                         'foto_kk' => $path,
                         'user_id' => Auth::user()->id,
                     ]);
-                    return redirect()->route('datadiri.create')->with('status', 'Berhasil, Lanjut Isi Form KTP Orang Tua!');
+                    return redirect()->route('datadiri.create')->with('status', 'Berhasil');
                 }
             }
             return redirect()->route('home');
         }
     }
-    public function storektp(Request $request)
-    {
-        $messages = [
-            'required' => ':attribute harus diisi!',
-            'numeric' => ':attribute harus diisi dengan angka!',
-            'image' => ':attribute harus berupa gambar!',
-            'mimes' => ':attribute harus berupa gambar!',
-            'max' => 'foto maksimal berukuran 2mb',
-            'digits' => ':attribute harus diisi 16 digit!',
-        ];
-        $this->validate($request,[
-            'nik' => 'required|numeric|digits:16',
-            'name' => 'required',
-            'foto_ktp_ortu' => 'required|image|mimes:jpg,jpeg,png|max:2048'
-        ], $messages);
 
-        $user_id = Auth::user()->id;
-        $ktp = Ktp_ortu::where('user_id', $user_id)->first();
-        $role = Auth::user()->getRoleNames();
-
-        foreach($role as $r){
-            if($r === 'Peserta'){
-                if ($ktp) {
-                    return redirect()->route('datadiri.create')->with('gagal', 'Anda sudah mengisi form KTP orang tua, untuk melanjutkan silahkan isi form yang belum');
-                }else{
-                    $path = 'image/ktportu/default.jpg';
-                    if($request->has('foto_ktp_ortu')){
-                        $path = Storage::putFile('public/image/ktportu', $request->file('foto_ktp_ortu'));
-                    }
-                    ktp_ortu::create([
-                        'nik' => $request->nik,
-                        'name' => $request->name,
-                        'foto_ktp_ortu' => $path,
-                        'user_id' => Auth::user()->id,
-                    ]);
-                    return redirect()->route('datadiri.create')->with('status', 'Berhasil!');
-                }
-            }
-            return redirect()->route('home');
-        }
-    }
 }

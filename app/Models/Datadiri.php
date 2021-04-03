@@ -12,4 +12,9 @@ class Datadiri extends Model
     protected $table = 'datadiri';
     protected $fillable = ['nik', 'nama', 'tempat', 'tgl_lahir', 'jk', 'alamat', 'agama', 'status_perkawinan', 'pekerjaan', 'foto_ktp', 'foto_akta', 'user_id', 'kecamatan_id'];
     // protected $dates = ['deleted_at'];
+
+    public function kecamatan()
+    {
+        return $this->belongsTo(Kecamatan::class);
+    }
 }

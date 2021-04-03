@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Fakultas;
 use App\Models\Jurusan;
-use App\Models\Perting;
 use Illuminate\Http\Request;
 
 class JurusanController extends Controller

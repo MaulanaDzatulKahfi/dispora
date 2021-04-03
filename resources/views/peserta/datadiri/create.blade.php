@@ -64,9 +64,6 @@
                     <div>
                         <button @click="step = 2" class="text-lg font-bold text-gray-700 leading-tight focus:outline-none">Kartu Keluarga</button>
                     </div>
-                    <div>
-                        <button @click="step = 3" class="text-lg font-bold text-gray-700 leading-tight focus:outline-none">KTP Orang Tua</button>
-                    </div>
                 </div>
                 <div class="border-b-4 border-green-600" :style="'width: '+ parseInt(step / 3 * 100) +'%'"></div>
 				<!-- /Top Navigation -->
@@ -266,46 +263,6 @@
                                     <input type="file"
                                         class="focus:outline-none focus:shadow-outline text-gray-600 font-medium mt-1 text-xs" name="foto_kk" required>
                                     @error('foto_kk')
-                                        <p class="text-xs italic text-red-500">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div class="mt-5 text-right">
-                                    <button class="w-32 focus:outline-none border border-transparent py-2 px-4 rounded-lg shadow-sm text-center text-white bg-green-500 hover:bg-green-700 font-medium"
-                                    type="submit">Kirim</button>
-                                </div>
-                            </form>
-						</div>
-
-					</div>
-
-					<div x-show.transition.in="step === 3">
-
-						<div class="mb-10">
-                            <form action="{{ route('store.ktp.ortu') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="nik" class="font-bold text-xs mb-1 text-gray-700">NIK</label>
-                                    <input type="number"
-                                        class="w-full px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium mt-1 focus:ring-green-600 text-xs @error('nik') border-red-500 @enderror" name="nik" placeholder="NIK" value="{{ old('nik') }}" autofocus required>
-                                    @error('nik')
-                                        <p class="text-xs italic text-red-500">{{ $message }}</p>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="no_kk" class="font-bold text-xs mb-1 text-gray-700">Nama</label>
-                                    <input type="text"
-                                        class="w-full px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium mt-1 focus:ring-green-600 text-xs @error('name') border-red-500 @enderror" name="name" placeholder="Nama" value="{{ old('name') }}" autofocus required>
-                                    @error('name')
-                                        <p class="text-xs italic text-red-500">{{ $message }}</p>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="foto_ktp" class="font-bold text-xs mb-1 text-gray-700 block">Foto KTP Orang Tua</label>
-                                    <input type="file"
-                                        class="focus:outline-none focus:shadow-outline text-gray-600 font-medium mt-1 text-xs" name="foto_ktp_ortu" required>
-                                    @error('foto_ktp_ortu')
                                         <p class="text-xs italic text-red-500">{{ $message }}</p>
                                     @enderror
                                 </div>

@@ -11,4 +11,9 @@ class Kecamatan extends Model
 
     protected $table = 'kecamatan';
     protected $fillable = ['kode', 'name'];
+
+    public function datadiri()
+    {
+        return $this->hasMany(Datadiri::class);
+    }
 }

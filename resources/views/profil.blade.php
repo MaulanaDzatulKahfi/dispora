@@ -92,7 +92,7 @@
                                 </tr>
                                 <tr>
                                     <td class="w-20"><label class="text-gray-400">Kecamatan</label></td>
-                                    <td><label class="text-gray-800">{{ $datadiri->kecamatan }}</label></td>
+                                    <td><label class="text-gray-800">{{ $datadiri->kecamatan->name }}</label></td>
                                 </tr>
                                 <tr>
                                     <td class="w-20"><label class="text-gray-400">Jenis Kelamin</label></td>
