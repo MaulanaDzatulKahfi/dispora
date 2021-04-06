@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Datadiri;
 use App\Models\Kk;
+use App\Models\Peserta;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -35,30 +36,16 @@ class HomeController extends Controller
         $kk = Kk::where('user_id', $user_id)->first();
         $role = Auth::user()->getRoleNames();
         $user = User::latest()->role(['Panitia', 'Peserta', 'Mitra'])->get();
-        $record = User::select(\DB::raw("COUNT(*) as count"), \DB::raw("DAYNAME(created_at) as day_name"), \DB::raw("DAY(created_at) as day"))
-                ->where('created_at', '>', Carbon::today()->subDay(6))
-                ->groupBy('day_name','day')
-                ->orderBy('day')
-                ->get();
-        // $record = User::select(\DB::raw("Count(*) as count"), )
-
-        // chart
-        $data = [];
-        foreach($record as $row) {
-            $data['label'][] = $row->day_name;
-            $data['data'][] = (int) $row->count;
-        }
-
+        $peserta = Peserta::where('user_id', Auth::user()->id)->first();
         foreach($role as $r){
             if($r === 'Peserta'){
                 if ($datadiri && $kk) {
-                    return view('home', compact('tittle', 'role'));
+                    return view('home', compact('tittle', 'role', 'peserta'));
                 }else{
                     return redirect()->route('datadiri.create');
                 }
             }
-            $data['chart_data'] = json_encode($data);
-            return view('home', compact('tittle', 'role', 'user'), $data);
+            return view('home', compact('tittle', 'role', 'user', 'peserta'));
         }
     }
     public function profil()

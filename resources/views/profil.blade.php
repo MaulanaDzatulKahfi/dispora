@@ -58,7 +58,7 @@
 
 
     <div class="py-10 bg-opacity-50 h-full">
-        <div class="mx-auto container w-full md:w-3/4 shadow-md">
+        <div class="mx-auto container w-full shadow-md">
             @if (session('success'))
                 <div class="bg-green-100 border-l-4 border-green-600 text-green-700 p-4 mt-3" role="alert">
                     {{ session('success') }}
@@ -67,35 +67,35 @@
             <div class="bg-white space-y-0">
                 @if($role[0] === 'Peserta')
                     <div class="md:inline-flex space-y-4 md:space-y-0 w-full p-4 text-gray-500 items-center">
-                        <h2 class="md:w-1/3 max-w-sm mx-auto">Personal Info</h2>
-                        <div class="md:w-2/3 max-w-sm mx-auto text-sm ">
+                        <h2 class="md:w-1/3 max-w-md mx-auto">Personal Info</h2>
+                        <div class="md:w-2/3 max-w-md mx-auto text-sm ">
                             <table>
                                 <tr>
-                                    <td class="w-20"><label class="text-gray-400">Nama</label></td>
-                                    <td><label class="text-gray-800">{{ $datadiri->nama }}</label></td>
-                                </tr>
-                                <tr>
-                                    <td class="w-20"><label class="text-gray-400">NIK</label></td>
+                                    <td class="w-24"><label class="text-gray-400">NIK</label></td>
                                     <td><label class="text-gray-800">{{ Str::substr($datadiri->nik, 0, 12).'XXXX' }}</label></td>
                                 </tr>
                                 <tr>
-                                    <td class="w-20"><label class="text-gray-400">KK</label></td>
+                                    <td class="w-24"><label class="text-gray-400">KK</label></td>
                                     <td><label class="text-gray-800">{{ Str::substr($kk->no_kk, 0, 12).'XXXX' }}</label></td>
                                 </tr>
                                 <tr>
-                                    <td class="w-20"><label class="text-gray-400">Agama</label></td>
+                                    <td class="w-24"><label class="text-gray-400">Nama</label></td>
+                                    <td><label class="text-gray-800">{{ $datadiri->nama }}</label></td>
+                                </tr>
+                                <tr>
+                                    <td class="w-24"><label class="text-gray-400">Agama</label></td>
                                     <td><label class="text-gray-800">{{ $datadiri->agama }}</label></td>
                                 </tr>
                                 <tr>
-                                    <td class="w-20"><label class="text-gray-400">Alamat</label></td>
+                                    <td class="w-24"><label class="text-gray-400">Alamat</label></td>
                                     <td><label class="text-gray-800">{{ $datadiri->alamat }}</label></td>
                                 </tr>
                                 <tr>
-                                    <td class="w-20"><label class="text-gray-400">Kecamatan</label></td>
+                                    <td class="w-24"><label class="text-gray-400">Kecamatan</label></td>
                                     <td><label class="text-gray-800">{{ $datadiri->kecamatan->name }}</label></td>
                                 </tr>
                                 <tr>
-                                    <td class="w-20"><label class="text-gray-400">Jenis Kelamin</label></td>
+                                    <td class="w-24"><label class="text-gray-400">Jenis Kelamin</label></td>
                                     <td><label class="text-gray-800">{{ $datadiri->jk }}</label></td>
                                 </tr>
                             </table>

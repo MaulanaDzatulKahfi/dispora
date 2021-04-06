@@ -10,11 +10,11 @@ class FakultasController extends Controller
 {
     function __construct()
     {
-        //  $this->middleware('permission:jurusan-list|jurusan-create|jurusan-edit|jurusan-delete', ['only' => ['index','show']]);
-        //  $this->middleware('permission:jurusan-create', ['only' => ['create','store']]);
-        //  $this->middleware('permission:jurusan-edit', ['only' => ['edit','update']]);
-        //  $this->middleware('permission:jurusan-delete', ['only' => ['destroy']]);
-        //  $this->middleware(['auth','verified']);
+         $this->middleware('permission:fakultas-list|fakultas-create|fakultas-edit|fakultas-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:fakultas-create', ['only' => ['create','store']]);
+         $this->middleware('permission:fakultas-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:fakultas-delete', ['only' => ['destroy']]);
+         $this->middleware(['auth','verified']);
     }
     public function index($id)
     {

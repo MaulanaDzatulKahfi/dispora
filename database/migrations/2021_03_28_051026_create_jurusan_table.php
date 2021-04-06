@@ -16,10 +16,10 @@ class CreateJurusanTable extends Migration
         Schema::create('jurusan', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('fakultas_id');
-            $table->unsignedBigInteger('perting_id');
-            $table->foreign('perting_id')->references('id')->on('perting');
+            $table->BigInteger('fakultas_id')->unsigned()->index();
+            $table->BigInteger('perting_id')->unsigned()->index();
             $table->foreign('fakultas_id')->references('id')->on('fakultas');
+            $table->foreign('perting_id')->references('id')->on('perting');
             $table->timestamps();
         });
     }

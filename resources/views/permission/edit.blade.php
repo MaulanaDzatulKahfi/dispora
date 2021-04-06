@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <div class="flex items-center bg-gray-50">
+    <div class="flex items-center bg-green-50">
         <div class="container mx-auto">
             <div class="max-w-md mx-auto mt-10 bg-white p-5 rounded-md shadow-sm">
                 <div class="text-center">

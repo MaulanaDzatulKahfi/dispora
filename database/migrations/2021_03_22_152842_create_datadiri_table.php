@@ -21,16 +21,15 @@ class CreateDatadiriTable extends Migration
             $table->date('tgl_lahir');
             $table->string('jk');
             $table->longText('alamat');
+            $table->string('kecamatan');
             $table->string('agama');
             $table->string('status_perkawinan');
             $table->string('pekerjaan');
             $table->string('foto_ktp');
             $table->string('foto_akta');
-            $table->unsignedBigInteger('kecamatan_id');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('kecamatan_id')->references('id')->on('kecamatan');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->softDeletes()->nullable();
+            // $table->softDeletes()->nullable();
             $table->timestamps();
         });
     }

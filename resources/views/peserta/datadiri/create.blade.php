@@ -23,7 +23,7 @@
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-100">
     <nav class="flex bg-green-600 justify-between">
         <div class="text-xs flex py-3 px-7 kuning">
             <div>
@@ -54,20 +54,23 @@
     </nav>
 
 	<div x-data="app()" x-cloak>
-		<div class="max-w-xl mx-auto px-4">
-			<div x-show.transition="step != 'complete'">
-				<!-- Top Navigation -->
-                <div class="flex justify-around pt-10 pb-3 text-center mt-16">
-                    <div>
+
+        <div x-show.transition="step != 'complete'">
+            <div class="max-w-2xl mx-auto">
+                <!-- Top Navigation -->
+                <div class="flex justify-around pb-3 text-center">
+                    <div class="mt-6">
                         <button @click="step = 1" class="text-lg font-bold text-gray-700 leading-tight focus:outline-none">Data Diri</button>
                     </div>
-                    <div>
+                    <div class="mt-6">
                         <button @click="step = 2" class="text-lg font-bold text-gray-700 leading-tight focus:outline-none">Kartu Keluarga</button>
                     </div>
                 </div>
-                <div class="border-b-4 border-green-600" :style="'width: '+ parseInt(step / 3 * 100) +'%'"></div>
-				<!-- /Top Navigation -->
+                <div class="border-b-4 border-green-600" :style="'width: '+ parseInt(step / 2 * 100) +'%'"></div>
+                <!-- /Top Navigation -->
+            </div>
 
+            <div class="max-w-2xl mx-auto px-4 bg-white overflow-y-scroll" style="height: 32rem">
                 @if (session('berhasil'))
                     <div class="bg-green-100 border-l-4 border-green-600 text-green-700 p-4 mt-3" role="alert">
                         {{ session('berhasil') }}
@@ -168,7 +171,7 @@
                                 <label for="kecamatan" class="font-bold text-xs mb-1 text-gray-700 block">Kecamatan</label>
                                 <select name="kecamatan" class="w-full px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium mt-1 text-xs">
                                     @foreach($kecamatan as $k)
-                                        <option value="{{ $k->id }}">{{ $k->name }}</option>
+                                        <option value="{{ $k->name }}">{{ $k->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('kecamatan')
@@ -266,7 +269,7 @@
                                         <p class="text-xs italic text-red-500">{{ $message }}</p>
                                     @enderror
                                 </div>
-                                <div class="mt-5 text-right">
+                                <div class="my-5 text-right">
                                     <button class="w-32 focus:outline-none border border-transparent py-2 px-4 rounded-lg shadow-sm text-center text-white bg-green-500 hover:bg-green-700 font-medium"
                                     type="submit">Kirim</button>
                                 </div>

@@ -13,7 +13,7 @@ class DatadiriController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('permission:datadiri-list|datadiri-create|datadiri-edit|datadiri-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:datadiri-list|datadiri-create|datadiri-edit|datadiri-delete', ['only' => ['index','store']]);
         $this->middleware('permission:datadiri-create', ['only' => ['create']]);
         $this->middleware(['auth','verified']);
     }
@@ -78,6 +78,11 @@ class DatadiriController extends Controller
         $tanggalint = strtotime($request->tgl_lahir);
         $user_id = Auth::user()->id;
         $datadiri = Datadiri::where('user_id', $user_id)->first();
+        $countdatadiri = Datadiri::where('user_id', $user_id)->get();
+        $total = count($countdatadiri);
+        $kode = 2 . 1 . $total + 1 . $user_id;
+        $intkode = (int)$kode;
+        // dd($intkode);
         $role = Auth::user()->getRoleNames();
 
         if($nik4digit === '3201'){
@@ -94,18 +99,19 @@ class DatadiriController extends Controller
                                 $path_akta = Storage::putFile("public/image/akta", $request->file('foto_akta'));
                             }
                             Datadiri::create([
+                                'id' => $kode,
                                 'nik' => $request->nik,
                                 'nama' => $request->nama,
                                 'tempat' => $request->tempat,
                                 'tgl_lahir' => $request->tgl_lahir,
                                 'jk' => $request->jk,
                                 'alamat' => $request->alamat,
+                                'kecamatan' => $request->kecamatan,
                                 'agama' => $request->agama,
                                 'status_perkawinan' => $request->status_perkawinan,
                                 'pekerjaan' => $request->pekerjaan,
                                 'foto_ktp' => $path_ktp,
                                 'foto_akta' => $path_akta,
-                                'kecamatan_id' => $request->kecamatan,
                                 'user_id' => Auth::user()->id,
                             ]);
                             return redirect()->route('datadiri.create')->with('berhasil', 'Berhasil, Lanjut Isi Form Kartu Keluarga');
@@ -137,6 +143,9 @@ class DatadiriController extends Controller
 
         $user_id = Auth::user()->id;
         $kk = Kk::where('user_id', $user_id)->first();
+        $countkk = Kk::where('user_id', $user_id)->get();
+        $total = count($countkk);
+        $kode = 2 . 1 . $total + 1 . $user_id;
         $role = Auth::user()->getRoleNames();
 
         foreach($role as $r){
@@ -149,6 +158,7 @@ class DatadiriController extends Controller
                         $path = Storage::putFile('public/image/kk', $request->file('foto_kk'));
                     }
                     Kk::create([
+                        'id' => $kode,
                         'no_kk' => $request->no_kk,
                         'foto_kk' => $path,
                         'user_id' => Auth::user()->id,

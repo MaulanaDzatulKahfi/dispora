@@ -20,4 +20,8 @@ class Jurusan extends Model
     {
         return $this->belongsTo(Fakultas::class);
     }
+    public function peserta()
+    {
+        return $this->hasMany(Peserta::class);
+    }
 }

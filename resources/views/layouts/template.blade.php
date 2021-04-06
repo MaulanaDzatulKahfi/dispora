@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     <meta charset="UTF-8">
@@ -10,10 +10,6 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     {{-- jquery --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    {{-- daterangepicker --}}
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js" defer></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" defer></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -22,7 +18,7 @@
 </head>
 
 
-<body class="antialiased bg-gray-50 font-sans leading-normal tracking-normal mt-5 md:mt-12">
+<body class="bg-white font-sans leading-normal tracking-normal mt-5 md:mt-12">
 
     <!--Nav-->
     <nav class="bg-white pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0 shadow-md ">
@@ -65,7 +61,8 @@
 
     <div class="flex flex-col md:flex-row">
 
-        <div class="bg-white h-16 md:h-auto fixed bottom-0 mt-3 md:relative  z-10 w-full md:w-48">
+        {{-- <div class="bg-white h-16 md:h-auto fixed bottom-0 mt-3 md:relative  z-10 w-full md:w-48"> --}}
+        <div class="bg-white h-16 fixed bottom-0 mt-12 md:relative md:h-screen z-10 w-full md:w-48">
 
             <div class="md:mt-12 md:w-48 md:fixed md:left-0 md:top-0 content-center md:content-start text-left justify-between">
                 <ul class="list-reset flex flex-row md:flex-col py-0 md:py-3 px-1 md:px-2 text-center md:text-left">
@@ -74,20 +71,22 @@
                             <i class="fas fa-tachometer-alt pr-0 md:pr-3  {{ Request::is('home')? "text-green-600":"hover:text-green-600" }}"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Dashboard</span>
                         </a>
                     </li>
+                    @can('peserta-list')
                     <li class="mr-3 flex-1">
-                        <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-green-600 border-b-2 border-white {{ Request::is('peserta')? "border-green-600":"hover:border-green-600" }}">
-                            <i class="fas fa-universal-access pr-0 md:pr-3  {{ Request::is('peserta')? "text-green-600":"hover:text-green-600" }}"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Peserta</span>
+                        <a href="{{ route('peserta.index') }}" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-green-600 border-b-2 border-white {{ Request::is('peserta', 'peserta/*')? "border-green-600":"hover:border-green-600" }}">
+                            <i class="fas fa-universal-access pr-0 md:pr-3  {{ Request::is('peserta', 'peserta/*')? "text-green-600":"hover:text-green-600" }}"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Peserta</span>
                         </a>
                     </li>
+                    @endcan
                     <li class="mr-3 flex-1">
                         <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-green-600 border-b-2 border-white hover:border-green-600">
-                            <i class="fas fa-tasks  pr-0 md:pr-3"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Beasiswa</span>
+                            <i class="fas fa-user-graduate  pr-0 md:pr-3"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Beasiswa</span>
                         </a>
                     </li>
                     @can('perting-list')
                         <li class="mr-3 flex-1">
-                            <a href="{{ route('perting.index') }}" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-green-600 border-b-2 border-white {{ Request::is('perting', 'perting/*', 'jurusan', 'jurusan/*')? "border-green-600":"hover:border-green-600" }}">
-                                <i class="fas fa-university pr-0 md:pr-3 {{ Request::is('perting', 'perting/*', 'jurusan', 'jurusan/*')? "text-green-600":"hover:text-green-600" }}"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Perguruan Tinggi</span>
+                            <a href="{{ route('perting.index') }}" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-green-600 border-b-2 border-white {{ Request::is('perting', 'perting/*', 'jurusan', 'jurusan/*', 'fakultas', 'fakultas/*')? "border-green-600":"hover:border-green-600" }}">
+                                <i class="fas fa-university pr-0 md:pr-3 {{ Request::is('perting', 'perting/*', 'jurusan', 'jurusan/*', 'fakultas', 'fakultas/*')? "text-green-600":"hover:text-green-600" }}"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Perguruan Tinggi</span>
                             </a>
                         </li>
                     @endcan
@@ -101,7 +100,7 @@
                     @can('role-list')
                         <li class="mr-3 flex-1">
                             <a href="{{ route('roles.index') }}" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-green-600 border-b-2 border-white {{ Request::is('roles', 'roles/*')? "border-green-600":"hover:border-green-600" }}">
-                                <i class="fas fa-university pr-0 md:pr-3 {{ Request::is('roles', 'roles/*')? "text-green-600":"hover:text-green-600" }}"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Roles</span>
+                                <i class="fas fa-user-tag pr-0 md:pr-3 {{ Request::is('roles', 'roles/*')? "text-green-600":"hover:text-green-600" }}"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Roles</span>
                             </a>
                         </li>
                     @endcan
@@ -109,17 +108,16 @@
                         <li class="mr-3 flex-1">
                             <a href="{{ route('permission.index') }}"
                             class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-green-600 border-b-2 border-white {{ Request::is('permission', 'permission/*')? "border-green-600":"hover:border-green-600" }}">
-                                <i class="fas fa-university pr-0 md:pr-3 {{ Request::is('permission', 'permission/*')? "text-green-600":"hover:text-green-600" }}"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Permission</span>
+                                <i class="fas fa-tasks pr-0 md:pr-3 {{ Request::is('permission', 'permission/*')? "text-green-600":"hover:text-green-600" }}"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-500 block md:inline-block">Permission</span>
                             </a>
                         </li>
                     @endcan
                 </ul>
             </div>
 
-
         </div>
 
-        <div class="main-content flex-1 bg-gray-50 mt-11 md:mt-2 pb-24 md:pb-5">
+        <div class="main-content flex-1 bg-green-50 mt-11 md:mt-2 pb-24 md:pb-5">
             @yield('content')
         </div>
     </div>

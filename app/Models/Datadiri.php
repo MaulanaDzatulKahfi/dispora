@@ -4,17 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Datadiri extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'id';
+    public $incrementing = false;
     protected $table = 'datadiri';
-    protected $fillable = ['nik', 'nama', 'tempat', 'tgl_lahir', 'jk', 'alamat', 'agama', 'status_perkawinan', 'pekerjaan', 'foto_ktp', 'foto_akta', 'user_id', 'kecamatan_id'];
-    // protected $dates = ['deleted_at'];
+    protected $fillable = [
+        'id', 'nik', 'nama', 'tempat',
+        'tgl_lahir', 'jk', 'alamat',
+        'kecamatan', 'agama', 'status_perkawinan',
+        'pekerjaan', 'foto_ktp', 'foto_akta', 'user_id'
+    ];
 
-    public function kecamatan()
+    public function peserta()
     {
-        return $this->belongsTo(Kecamatan::class);
+        return $this->hasMany(Peserta::class);
     }
 }

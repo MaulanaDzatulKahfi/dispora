@@ -29,4 +29,8 @@ class Perting extends Model
     {
         return $this->hasMany(Fakultas::class);
     }
+    public function peserta()
+    {
+        return $this->hasMany(Peserta::class);
+    }
 }

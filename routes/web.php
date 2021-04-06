@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PertingController;
+use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 
@@ -22,10 +23,9 @@ use App\Http\Controllers\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('beranda');
-});
-
+// Route::get('/', function () {
+//     return view('beranda');
+// });
 
 Auth::routes();
 //verifikasi email
@@ -91,5 +91,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('permission/{permission}', [PermissionController::class, 'update'])->name('permission.update');
     Route::delete('permission/{permission}', [PermissionController::class, 'destroy'])->name('permission.destroy');
 
-
+    //peserta
+    Route::get('peserta', [PesertaController::class, 'index'])->name('peserta.index');
+    Route::get('peserta/create', [PesertaController::class, 'create'])->name('peserta.create');
+    Route::post('ajaxperting', [PesertaController::class, 'ajaxPerting'])->name('ajax.perting');
+    Route::post('ajaxfakultas', [PesertaController::class, 'ajaxFakultas'])->name('ajax.fakultas');
+    Route::post('store', [PesertaController::class, 'store'])->name('peserta.store');
+    Route::get('peserta/show/{peserta}', [PesertaController::class, 'show'])->name('peserta.show');
 });
