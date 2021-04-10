@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Datadiri;
 use App\Models\Kecamatan;
 use App\Models\Kk;
+use App\Models\Perting;
+use App\Models\Peserta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -13,8 +15,11 @@ class DatadiriController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:datadiri-list|datadiri-create|datadiri-edit|datadiri-delete', ['only' => ['index','store']]);
+        // $this->middleware('permission:datadiri-list|datadiri-create|datadiri-edit|datadiri-delete', ['only' => ['index','store']]);
         $this->middleware('permission:datadiri-create', ['only' => ['create']]);
+        $this->middleware('permission:datadiri-store', ['only' => ['store', 'storekk']]);
+        $this->middleware('permission:kolektif-createDatadiri', ['only' => ['createDatadiri']]);
+        $this->middleware('permission:kolektif-createKk', ['only' => ['createKk']]);
         $this->middleware(['auth','verified']);
     }
     public function create()
@@ -81,22 +86,21 @@ class DatadiriController extends Controller
         $countdatadiri = Datadiri::where('user_id', $user_id)->get();
         $total = count($countdatadiri);
         $kode = 2 . 1 . $total + 1 . $user_id;
-        $intkode = (int)$kode;
-        // dd($intkode);
         $role = Auth::user()->getRoleNames();
 
-        if($nik4digit === '3201'){
-            if($tigapuluh <= $tanggalint && $enambelas >= $tanggalint){
-                foreach($role as $r){
+        foreach($role as $r){
+            if($nik4digit === '3201'){
+                if($tigapuluh <= $tanggalint && $enambelas >= $tanggalint){
                     if($r === 'Peserta'){
                         if ($datadiri) {
                             return redirect()->route('datadiri.create')->with('gagal', 'Anda sudah mengisi form Data diri, untuk melanjutkan silahkan isi form yang belum');
                         }else{
                             $path_ktp = "image/ktp/default.jpg";
                             $path_akta = "image/akta/default.jpg";
-                            if($request->has("foto_ktp") && $request->has("foto_akta") ){
+                            if($request->has("foto_ktp") && $request->has("foto_akta") && $request->has("pas_foto") ){
                                 $path_ktp = Storage::putFile("public/image/ktp", $request->file('foto_ktp'));
                                 $path_akta = Storage::putFile("public/image/akta", $request->file('foto_akta'));
+                                $path_pas_foto = Storage::putFile("public/image/akta", $request->file('pas_foto'));
                             }
                             Datadiri::create([
                                 'id' => $kode,
@@ -112,17 +116,50 @@ class DatadiriController extends Controller
                                 'pekerjaan' => $request->pekerjaan,
                                 'foto_ktp' => $path_ktp,
                                 'foto_akta' => $path_akta,
+                                'pas_foto' => $path_pas_foto,
                                 'user_id' => Auth::user()->id,
                             ]);
                             return redirect()->route('datadiri.create')->with('berhasil', 'Berhasil, Lanjut Isi Form Kartu Keluarga');
                         }
+                    }elseif($r === 'Peserta-kolektif'){
+                        $path_ktp = "image/ktp/default.jpg";
+                        $path_akta = "image/akta/default.jpg";
+                        if($request->has("foto_ktp") && $request->has("foto_akta") && $request->has("pas_foto") ){
+                            $path_ktp = Storage::putFile("public/image/ktp", $request->file('foto_ktp'));
+                            $path_akta = Storage::putFile("public/image/akta", $request->file('foto_akta'));
+                            $path_pas_foto = Storage::putFile("public/image/akta", $request->file('pas_foto'));
+                        }
+                        Datadiri::create([
+                            'id' => $kode,
+                            'nik' => $request->nik,
+                            'nama' => $request->nama,
+                            'tempat' => $request->tempat,
+                            'tgl_lahir' => $request->tgl_lahir,
+                            'jk' => $request->jk,
+                            'alamat' => $request->alamat,
+                            'kecamatan' => $request->kecamatan,
+                            'agama' => $request->agama,
+                            'status_perkawinan' => $request->status_perkawinan,
+                            'pekerjaan' => $request->pekerjaan,
+                            'foto_ktp' => $path_ktp,
+                            'foto_akta' => $path_akta,
+                            'pas_foto' => $path_pas_foto,
+                            'user_id' => Auth::user()->id,
+                        ]);
+                        return redirect()->route('kolektif.createKk')->with('berhasil', 'Berhasil, Lanjut Isi Form Kartu Keluarga');
                     }
+                }else{
+                    if($r === 'Peserta-kolektif'){
+                        return redirect()->route('kolektif.createDatadiri')->with('gagal', 'Pendaftar minimal berusia 16tahun dan maksimal 30tahun');
+                    }
+                    return redirect()->route('datadiri.create')->with('gagal', 'Pendaftar minimal berusia 16tahun dan maksimal 30tahun');
                 }
             }else{
-                return redirect()->route('datadiri.create')->with('gagal', 'Pendaftar minimal berusia 16tahun dan maksimal 30tahun');
+                if($r === 'Peserta-kolektif'){
+                    return redirect()->route('kolektif.createDatadiri')->with('gagal', 'Maaf, Beasiswa ini diperuntukan penduduk Kabupaten Bogor');
+                return redirect()->route('datadiri.create')->with('gagal', 'Maaf, Beasiswa ini diperuntukan penduduk Kabupaten Bogor');
+                }
             }
-        }else{
-            return redirect()->route('datadiri.create')->with('gagal', 'Maaf, Beasiswa ini diperuntukan penduduk Kabupaten Bogor');
         }
     }
 
@@ -165,9 +202,63 @@ class DatadiriController extends Controller
                     ]);
                     return redirect()->route('datadiri.create')->with('status', 'Berhasil');
                 }
+            }elseif($r === 'Peserta-kolektif'){
+                $path = 'image/kk/default.jpg';
+                if($request->has('foto_kk')){
+                    $path = Storage::putFile('public/image/kk', $request->file('foto_kk'));
+                }
+                Kk::create([
+                    'id' => $kode,
+                    'no_kk' => $request->no_kk,
+                    'foto_kk' => $path,
+                    'user_id' => Auth::user()->id,
+                ]);
+                return redirect()->route('kolektif.createPendidikan')->with('berhasil', 'Berhasil, Silahkan Isi Form Pendidikan');
             }
             return redirect()->route('home');
         }
     }
 
+    //kolektif
+    public function createDatadiri()
+    {
+        $user_id = Auth::user()->id;
+        $countdatadiri = Datadiri::where('user_id', $user_id)->get();
+        $countkk = Kk::where('user_id', $user_id)->get();
+        $totaldatadiri = count($countdatadiri);
+        $totalkk = count($countdatadiri);
+        $kodekk = 2 . 1 . $totalkk . $user_id;
+        $kodedatadiri = 2 . 1 . $totaldatadiri + 1 . $user_id;
+        $kk = Kk::where('id', $kodekk)->first(); //false
+        $datadiri = Datadiri::where('id', $kodedatadiri)->first(); //true
+
+        if($datadiri){
+            return redirect()->route('kolektif.createKk');
+        }else{
+            $tittle = 'Form Datadiri';
+            $kecamatan = Kecamatan::all();
+            return view('peserta.kolektif.create-datadiri', compact('tittle', 'kecamatan'));
+        }
+    }
+    public function createKk()
+    {
+        $user_id = Auth::user()->id;
+        $countkk = Kk::where('user_id', $user_id)->get();
+        $countdatadiri = Datadiri::where('user_id', $user_id)->get();
+        $totalkk = count($countkk);
+        $totaldatadiri = count($countdatadiri);
+        $kodekk = 2 . 1 . $totalkk + 1 . $user_id;
+        $kodedadiri = 2 . 1 . $totaldatadiri . $user_id;
+        $kk= Kk::where('id', $kodekk)->first();
+        $datadiri = Datadiri::where('id', $kodedadiri)->first();
+
+        if ($datadiri == null) {
+            return redirect()->route('kolektif.createDatadiri');
+        }elseif($kk){
+            return redirect()->route('kolektif.createPendidikan');
+        }else{
+            $tittle = 'Peserta kolektif';
+            return view('peserta.kolektif.create-kk', compact('tittle'));
+        }
+    }
 }

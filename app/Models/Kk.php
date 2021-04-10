@@ -12,4 +12,9 @@ class Kk extends Model
     protected $table = 'kk';
     public $incrementing = false;
     protected $fillable = ['id', 'no_kk', 'foto_kk', 'user_id'];
+
+    public function kk()
+    {
+        return $this->hasMany(Peserta::class);
+    }
 }

@@ -35,7 +35,8 @@
                         <th data-priority="2">Nama</th>
                         <th data-priority="3">Perguruan Tinggi</th>
                         <th data-priority="4">Kecamatan</th>
-                        <th data-priority="5">Aksi</th>
+                        <th data-priority="5">Status</th>
+                        <th data-priority="6">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +46,11 @@
                             <td>{{ $p->datadiri->nama }}</td>
                             <td>{{ $p->perting->name }}</td>
                             <td>{{ $p->datadiri->kecamatan }}</td>
+                            @if($p->status == 'evaluasi')
+                                <td>
+                                    <p class="bg-yellow-500 text-white rounded-full w-16 h-6 text-sm">{{ $p->status }}</p>
+                                </td>
+                            @endif
                             <td class="flex justify-center">
                             {{-- @can('peserta-delete') --}}
                             <a class="bg-blue-500 text-white rounded-full w-16 h-6 text-sm focus:outline-none hover:bg-blue-700" href="{{ route('peserta.show', $p->id) }}">Show</a>
@@ -70,7 +76,7 @@
 @section('script')
     <script>
         $(document).ready( function () {
-            $('#dataTable').DataTable();
-        } );
+            $('#dataTable').DataTable().columns.adjust().responsive.recalc()
+        });
     </script>
 @endsection

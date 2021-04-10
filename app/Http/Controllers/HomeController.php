@@ -36,7 +36,8 @@ class HomeController extends Controller
         $kk = Kk::where('user_id', $user_id)->first();
         $role = Auth::user()->getRoleNames();
         $user = User::latest()->role(['Panitia', 'Peserta', 'Mitra'])->get();
-        $peserta = Peserta::where('user_id', Auth::user()->id)->first();
+        $peserta = Peserta::where('user_id', $user_id)->first();
+        $pesertaKolektif = Peserta::where('user_id', $user_id)->get();
         foreach($role as $r){
             if($r === 'Peserta'){
                 if ($datadiri && $kk) {
@@ -45,7 +46,7 @@ class HomeController extends Controller
                     return redirect()->route('datadiri.create');
                 }
             }
-            return view('home', compact('tittle', 'role', 'user', 'peserta'));
+            return view('home', compact('tittle', 'role', 'user', 'peserta', 'pesertaKolektif'));
         }
     }
     public function profil()

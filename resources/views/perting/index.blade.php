@@ -73,7 +73,7 @@
 @section('script')
     <script>
         $(document).ready( function () {
-            $('#dataTable').DataTable();
-        } );
+            $('#dataTable').DataTable().columns.adjust().responsive.recalc();
+        });
     </script>
 @endsection

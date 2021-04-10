@@ -15,7 +15,8 @@ class Datadiri extends Model
         'id', 'nik', 'nama', 'tempat',
         'tgl_lahir', 'jk', 'alamat',
         'kecamatan', 'agama', 'status_perkawinan',
-        'pekerjaan', 'foto_ktp', 'foto_akta', 'user_id'
+        'pekerjaan', 'foto_ktp', 'foto_akta',
+        'pas_foto', 'user_id'
     ];
 
     public function peserta()

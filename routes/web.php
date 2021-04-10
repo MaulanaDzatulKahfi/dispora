@@ -10,6 +10,7 @@ use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PertingController;
 use App\Http\Controllers\PesertaController;
+use App\Http\Controllers\PrestasiController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 
@@ -96,6 +97,15 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('peserta/create', [PesertaController::class, 'create'])->name('peserta.create');
     Route::post('ajaxperting', [PesertaController::class, 'ajaxPerting'])->name('ajax.perting');
     Route::post('ajaxfakultas', [PesertaController::class, 'ajaxFakultas'])->name('ajax.fakultas');
-    Route::post('store', [PesertaController::class, 'store'])->name('peserta.store');
+    Route::post('peserta/store', [PesertaController::class, 'store'])->name('peserta.store');
     Route::get('peserta/show/{peserta}', [PesertaController::class, 'show'])->name('peserta.show');
+
+    //peserta kolektif
+    Route::get('kolektif/createdatadiri', [DatadiriController::class, 'createDatadiri'])->name('kolektif.createDatadiri');
+    Route::get('kolektif/createkk', [DatadiriController::class, 'createKk'])->name('kolektif.createKk');
+    Route::get('kolektif/creatependidikan', [PesertaController::class, 'createPendidikan'])->name('kolektif.createPendidikan');
+
+    //prestasi
+    Route::get('prestasi/create', [PrestasiController::class, 'create'])->name('prestasi.create');
+    Route::post('prestasi/store', [PrestasiController::class, 'store'])->name('prestasi.store');
 });

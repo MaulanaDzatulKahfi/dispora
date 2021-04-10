@@ -238,6 +238,17 @@
                                     <p class="text-xs italic text-red-500">{{ $message }}</p>
                                 @enderror
                             </div>
+
+                            <div class="mb-3">
+                                <label for="foto" class="font-bold text-xs mb-1 text-gray-700 block">Foto 4x6</label>
+                                <input type="file"
+                                class="focus:outline-none focus:shadow-outline text-gray-600 font-medium mt-1 text-xs"
+                                name="pas_foto" required>
+                                @error('pas_foto')
+                                    <p class="text-xs italic text-red-500">{{ $message }}</p>
+                                    @enderror
+                                <p class="text-xs italic text-red-500">*latar belakang warna merah</p>
+                            </div>
                             <div class="mt-5 text-right">
                                 <button
                                 class="w-32 focus:outline-none border border-transparent py-2 px-4 rounded-lg shadow-sm text-center text-white bg-green-500 hover:bg-green-700 font-medium"

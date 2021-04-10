@@ -36,7 +36,7 @@ class UserController extends Controller
     {
         $tittle = 'user';
         if ($request->ajax()) {
-            $user = User::latest()->role(['Panitia', 'Peserta', 'Mitra'])->get();
+            $user = User::latest()->role(['Panitia', 'Peserta', 'Mitra', 'Peserta-kolektif'])->get();
             return Datatables::of($user)
                     ->addIndexColumn()
                     ->addColumn('action', function($user){

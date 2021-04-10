@@ -59,5 +59,8 @@
         @if($r === 'Peserta')
             @include('peserta.dashboard')
         @endif
+        @if($r === 'Peserta-kolektif')
+            @include('peserta.kolektif.dashboard')
+        @endif
     @endforeach
 @endsection

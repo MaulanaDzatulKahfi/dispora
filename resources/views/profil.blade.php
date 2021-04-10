@@ -72,11 +72,11 @@
                             <table>
                                 <tr>
                                     <td class="w-24"><label class="text-gray-400">NIK</label></td>
-                                    <td><label class="text-gray-800">{{ Str::substr($datadiri->nik, 0, 12).'XXXX' }}</label></td>
+                                    <td><label class="text-gray-800">{{ $datadiri->nik }}</label></td>
                                 </tr>
                                 <tr>
                                     <td class="w-24"><label class="text-gray-400">KK</label></td>
-                                    <td><label class="text-gray-800">{{ Str::substr($kk->no_kk, 0, 12).'XXXX' }}</label></td>
+                                    <td><label class="text-gray-800">{{ $kk->no_kk }}</label></td>
                                 </tr>
                                 <tr>
                                     <td class="w-24"><label class="text-gray-400">Nama</label></td>
@@ -92,7 +92,7 @@
                                 </tr>
                                 <tr>
                                     <td class="w-24"><label class="text-gray-400">Kecamatan</label></td>
-                                    <td><label class="text-gray-800">{{ $datadiri->kecamatan->name }}</label></td>
+                                    <td><label class="text-gray-800">{{ $datadiri->kecamatan }}</label></td>
                                 </tr>
                                 <tr>
                                     <td class="w-24"><label class="text-gray-400">Jenis Kelamin</label></td>

@@ -27,6 +27,7 @@ class CreateDatadiriTable extends Migration
             $table->string('pekerjaan');
             $table->string('foto_ktp');
             $table->string('foto_akta');
+            $table->string('pas_foto');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             // $table->softDeletes()->nullable();
