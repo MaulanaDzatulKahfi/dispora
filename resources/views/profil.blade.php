@@ -103,6 +103,28 @@
                     </div>
                     <hr />
                 @endif
+                @if($role[0] === 'Peserta-kolektif')
+                <div class="md:inline-flex space-y-4 md:space-y-0 w-full p-4 text-gray-500 items-center">
+                    <h2 class="md:w-1/3 max-w-md mx-auto">Personal Info</h2>
+                    <div class="md:w-2/3 max-w-md mx-auto text-sm ">
+                        <table>
+                            <tr>
+                                <td class="w-24"><label class="text-gray-400">NIP</label></td>
+                                <td><label class="text-gray-800">{{ $petugas->nip }}</label></td>
+                            </tr>
+                            <tr>
+                                <td class="w-24"><label class="text-gray-400">Nama</label></td>
+                                <td><label class="text-gray-800">{{ $petugas->name }}</label></td>
+                            </tr>
+                            <tr>
+                                <td class="w-24"><label class="text-gray-400">Jabatan</label></td>
+                                <td><label class="text-gray-800">{{ $petugas->jabatan }}</label></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <hr />
+                @endif
 
                 <div class="md:inline-flex  space-y-4 md:space-y-0  w-full p-4 text-gray-500 items-center">
                 <h2 class="md:w-1/3 mx-auto max-w-sm">Akun</h2>

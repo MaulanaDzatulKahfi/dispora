@@ -31,9 +31,9 @@
                     <tr>
                         <th data-priority="1">No</th>
                         <th data-priority="2">Kode PT</th>
-                        <th data-priority="2">Nama</th>
-                        <th data-priority="2">Status PT</th>
-                        <th data-priority="3">Aksi</th>
+                        <th data-priority="3">Nama</th>
+                        <th data-priority="4">Status PT</th>
+                        <th data-priority="5">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,7 +73,9 @@
 @section('script')
     <script>
         $(document).ready( function () {
-            $('#dataTable').DataTable().columns.adjust().responsive.recalc();
+            $('#dataTable').DataTable({
+					responsive: true
+				}).columns.adjust().responsive.recalc()
         });
     </script>
 @endsection

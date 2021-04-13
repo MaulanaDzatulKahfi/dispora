@@ -2,22 +2,25 @@
 
 @section('content')
     <div class="bg-green-600 p-4 shadow text-xl text-white">
-        <h3 class="font-bold pl-2">Tambah Peserta</h3>
+        <h3 class="font-bold pl-2">Pendidikan</h3>
     </div>
 
     <div class="w-11/12 mx-auto">
         <!-- Top Navigation -->
-        <div class="flex justify-around pb-3 text-center">
-            <div class="mt-3">
-                <button class="font-bold text-gray-700 leading-tight focus:outline-none">Data Diri</button>
+        <div class="flex pb-3 text-center overflow-x-scroll md:overflow-hidden">
+            <div class="mt-3 mx-3 md:mx-auto">
+                <button class="font-bold text-gray-700 leading-tight focus:outline-none">DataDiri</button>
             </div>
-            <div class="mt-3">
-                <button class="font-bold text-gray-700 leading-tight focus:outline-none">Kartu Keluarga</button>
+            <div class="mt-3 mx-3 md:mx-auto">
+                <button class="font-bold text-gray-700 leading-tight focus:outline-none">KartuKeluarga</button>
             </div>
-            <div class="mt-3">
+            <div class="mt-3 mx-3 md:mx-auto">
                 <button class="font-bold text-gray-700 leading-tight focus:outline-none">Prestasi</button>
             </div>
-            <div class="mt-3">
+            <div class="mt-3 mx-3 md:mx-auto">
+                <button class="font-bold text-gray-700 leading-tight focus:outline-none">Pertanyaan&Sosmed</button>
+            </div>
+            <div class="mt-3 mx-3 md:mx-auto">
                 <button class="font-bold text-gray-700 leading-tight focus:outline-none">Pendidikan</button>
                 <div class="mt-1 border-b-4 border-green-600"></div>
             </div>
@@ -154,12 +157,12 @@
                     <form action="{{ route('peserta.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="aktif" value="aktif">
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="nisn" class="font-bold text-sm mb-1 text-gray-700 block">NISN</label>
                             <input type="text"
                                 class="w-full px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium mt-1 text-sm border @error('nisn') border-red-500 @enderror"
                                 name="nisn" required>
-                        </div>
+                        </div> --}}
 
                         <div class="mb-3">
                             <label class="font-bold text-sm mb-1 text-gray-700 block">Asal Sekolah</label>

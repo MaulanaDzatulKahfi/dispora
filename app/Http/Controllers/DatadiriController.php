@@ -213,7 +213,7 @@ class DatadiriController extends Controller
                     'foto_kk' => $path,
                     'user_id' => Auth::user()->id,
                 ]);
-                return redirect()->route('kolektif.createPendidikan')->with('berhasil', 'Berhasil, Silahkan Isi Form Pendidikan');
+                return redirect()->route('prestasi.create')->with('berhasil', 'Berhasil, Silahkan Isi Form Prestasi');
             }
             return redirect()->route('home');
         }

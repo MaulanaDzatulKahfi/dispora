@@ -23,7 +23,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-green-50">
     <nav class="flex bg-green-600 justify-between">
         <div class="text-xs flex py-3 px-7 kuning">
             <div>

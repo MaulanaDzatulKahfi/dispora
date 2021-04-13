@@ -13,9 +13,10 @@
         </div>
     @endif
     <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-        @can('peserta-create')
+        @can('kolektif-createDatadiri')
             <div class="flex mb-2">
                 <a href="{{ route('kolektif.createDatadiri') }}" class="bg-green-600 text-white p-2 rounded-md hover:bg-green-700">Tambah</a>
+                <a href="{{ route('kolektif.suratPermohonan') }}" class="bg-red-600 ml-3 text-white p-2 rounded-md hover:bg-red-700">Surat Permohonan Beasiswa</a>
             </div>
         @endcan
         <table id="dataTable" class="stripe hover text-gray-700 text-center" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
@@ -46,7 +47,9 @@
 @section('script')
     <script>
         $(document).ready( function () {
-            $('#dataTable').DataTable();
-        } );
+            $('#dataTable').DataTable({
+					responsive: true
+				}).columns.adjust().responsive.recalc()
+        });
     </script>
 @endsection

@@ -15,7 +15,7 @@ class CreatePrestasiTable extends Migration
     {
         Schema::create('prestasi', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('kode');
+            $table->unsignedBigInteger('kode')->index();
             $table->string('nim')->nullable();
             $table->float('ipk')->nullable();
             $table->integer('semester')->nullable();

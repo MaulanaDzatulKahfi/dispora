@@ -10,7 +10,7 @@ class Peserta extends Model
     use HasFactory;
 
     protected $table = 'peserta';
-    protected $fillable = ['nisn', 'asal_sekolah', 'lulus_tahun', 'foto', 'foto_ptn', 'status', 'status_mhs', 'perting_id', 'fakultas_id', 'jurusan_id', 'datadiri_id', 'kk_id', 'prestasi_kode', 'user_id'];
+    protected $fillable = ['nisn', 'asal_sekolah', 'lulus_tahun', 'foto', 'foto_ptn', 'status', 'status_mhs', 'total_skor', 'perting_id', 'fakultas_id', 'jurusan_id', 'datadiri_id', 'kk_id', 'prestasi_kode', 'pertanyaan_id', 'user_id'];
 
     public function perting()
     {
@@ -35,5 +35,9 @@ class Peserta extends Model
     public function prestasi()
     {
         return $this->belongsTo(Prestasi::class, 'prestasi_kode', 'kode');
+    }
+    public function pertanyaan()
+    {
+        return $this->belongsTo(Pertanyaan::class);
     }
 }

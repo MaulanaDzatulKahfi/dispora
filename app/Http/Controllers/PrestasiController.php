@@ -79,7 +79,7 @@ class PrestasiController extends Controller
                         'user_id' => $user_id
                     ]);
                 }
-                return redirect()->route('peserta.create');
+                return redirect()->route('pertanyaan.create');
             }elseif($role[0] == 'Peserta-kolektif'){
                 foreach ($request->semester as $key => $value) {
                     if($request->has('foto')){
@@ -104,7 +104,7 @@ class PrestasiController extends Controller
                         'user_id' => $user_id
                     ]);
                 }
-                return redirect()->route('kolektif.createPendidikan');
+                return redirect()->route('pertanyaan.create');
             }
         }elseif($request->non_akademik == 'non_akademik'){
             if($role[0] == 'Peserta'){
@@ -136,7 +136,7 @@ class PrestasiController extends Controller
                         'user_id' => $user_id
                     ]);
                 }
-                return redirect()->route('peserta.create');
+                return redirect()->route('pertanyaan.create');
             }elseif($role[0] == 'Peserta-kolektif'){
                 foreach($request->lomba as $key => $value){
                     if($request->has('foto')){
@@ -163,7 +163,7 @@ class PrestasiController extends Controller
                         'user_id' => $user_id
                     ]);
                 }
-                return redirect()->route('kolektif.createPendidikan');
+                return redirect()->route('pertanyaan.create');
             }
         }elseif($request->mahasiswa_aktif == 'mahasiswa_aktif'){
             $this->validate($request, [
@@ -194,7 +194,7 @@ class PrestasiController extends Controller
                     'skor' => $skor,
                     'user_id' => $user_id,
                 ]);
-                return redirect()->route('peserta.create');
+                return redirect()->route('pertanyaan.create');
             }elseif($role[0] == 'Peserta-kolektif'){
                 if($request->has('foto')){
                     $path = Storage::putFile('public/image/mahasiswa_aktif', $request->file('foto'));
@@ -216,7 +216,7 @@ class PrestasiController extends Controller
                     'skor' => $skor,
                     'user_id' => $user_id,
                 ]);
-                return redirect()->route('kolektif.createPendidikan');
+                return redirect()->route('pertanyaan.create');
             }
         }elseif($request->tahfidz == 'tahfidz'){
             $this->validate($request, [
@@ -250,7 +250,7 @@ class PrestasiController extends Controller
                     'skor' => $skor,
                     'user_id' => $user_id,
                 ]);
-                return redirect()->route('peserta.create');
+                return redirect()->route('pertanyaan.create');
             }elseif($role[0] == 'Peserta-kolektif'){
                 if($request->has('foto')){
                     $path = Storage::putFile('public/image/tahfidz', $request->file('foto'));
@@ -274,7 +274,7 @@ class PrestasiController extends Controller
                     'skor' => $skor,
                     'user_id' => $user_id,
                 ]);
-                return redirect()->route('kolektif.createPendidikan');
+                return redirect()->route('pertanyaan.create');
             }
         }elseif($request->kerelawanan == 'kerelawanan'){
             if($role[0] == 'Peserta'){
@@ -307,7 +307,7 @@ class PrestasiController extends Controller
                         'user_id' => $user_id
                     ]);
                 }
-                return redirect()->route('peserta.create');
+                return redirect()->route('pertanyaan.create');
             }elseif($role[0] == 'Peserta-kolektif'){
                 foreach($request->lomba as $key => $value){
                     if($request->has('foto')){
@@ -335,7 +335,7 @@ class PrestasiController extends Controller
                         'user_id' => $user_id
                     ]);
                 }
-                return redirect()->route('kolektif.createPendidikan');
+                return redirect()->route('pertanyaan.create');
             }
         }else{
             return redirect()->route('prestasi.create');

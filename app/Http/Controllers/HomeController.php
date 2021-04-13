@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Datadiri;
 use App\Models\Kk;
+use App\Models\Kolektif;
 use App\Models\Peserta;
 use App\Models\User;
 use Carbon\Carbon;
@@ -34,19 +35,27 @@ class HomeController extends Controller
         $user_id = Auth::user()->id;
         $datadiri = Datadiri::where('user_id', $user_id)->first();
         $kk = Kk::where('user_id', $user_id)->first();
+        $petugas = Kolektif::where('user_id', $user_id)->first();
         $role = Auth::user()->getRoleNames();
-        $user = User::latest()->role(['Panitia', 'Peserta', 'Mitra'])->get();
+        $user = User::latest()->role(['Panitia', 'Peserta', 'Mitra', 'Peserta-kolektif'])->get();
         $peserta = Peserta::where('user_id', $user_id)->first();
         $pesertaKolektif = Peserta::where('user_id', $user_id)->get();
         foreach($role as $r){
             if($r === 'Peserta'){
                 if ($datadiri && $kk) {
-                    return view('home', compact('tittle', 'role', 'peserta'));
+                    return view('home', compact('tittle', 'role', 'user', 'peserta', 'pesertaKolektif'));
                 }else{
                     return redirect()->route('datadiri.create');
                 }
+            }elseif($r === 'Peserta-kolektif'){
+                if($petugas){
+                    return view('home', compact('tittle', 'role', 'user', 'peserta', 'pesertaKolektif'));
+                }else{
+                    return redirect()->route('kolektif.createPetugas');
+                }
+            }else{
+                return view('home', compact('tittle', 'role', 'user', 'peserta', 'pesertaKolektif'));
             }
-            return view('home', compact('tittle', 'role', 'user', 'peserta', 'pesertaKolektif'));
         }
     }
     public function profil()
@@ -54,8 +63,9 @@ class HomeController extends Controller
         $tittle = 'profil';
         $datadiri = Datadiri::where('user_id', Auth::user()->id)->first();
         $kk = Kk::where('user_id', Auth::user()->id)->first();
+        $petugas = Kolektif::where('user_id', Auth::user()->id)->first();
         $role = Auth::user()->getRoleNames();
-        return view('profil', compact('tittle', 'datadiri', 'kk', 'role'));
+        return view('profil', compact('tittle', 'datadiri', 'kk', 'role', 'petugas'));
     }
     public function update(Request $request)
     {

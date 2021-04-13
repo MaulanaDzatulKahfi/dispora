@@ -35,6 +35,7 @@
                         <th data-priority="2">Nama</th>
                         <th data-priority="3">Perguruan Tinggi</th>
                         <th data-priority="4">Kecamatan</th>
+                        <th data-priority="4">Skor</th>
                         <th data-priority="5">Status</th>
                         <th data-priority="6">Aksi</th>
                     </tr>
@@ -46,6 +47,7 @@
                             <td>{{ $p->datadiri->nama }}</td>
                             <td>{{ $p->perting->name }}</td>
                             <td>{{ $p->datadiri->kecamatan }}</td>
+                            <td>{{ $p->total_skor }}</td>
                             @if($p->status == 'evaluasi')
                                 <td>
                                     <p class="bg-yellow-500 text-white rounded-full w-16 h-6 text-sm">{{ $p->status }}</p>
@@ -76,7 +78,9 @@
 @section('script')
     <script>
         $(document).ready( function () {
-            $('#dataTable').DataTable().columns.adjust().responsive.recalc()
+            $('#dataTable').DataTable({
+					responsive: true
+				}).columns.adjust().responsive.recalc()
         });
     </script>
 @endsection

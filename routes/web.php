@@ -8,6 +8,7 @@ use App\Http\Controllers\FakultasController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PertanyaanController;
 use App\Http\Controllers\PertingController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\PrestasiController;
@@ -101,6 +102,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('peserta/show/{peserta}', [PesertaController::class, 'show'])->name('peserta.show');
 
     //peserta kolektif
+    Route::get('kolektif/createpetugas', [PesertaController::class, 'createPetugas'])->name('kolektif.createPetugas');
+    Route::post('kolektif/store', [PesertaController::class, 'storePetugas'])->name('kolektif.store');
     Route::get('kolektif/createdatadiri', [DatadiriController::class, 'createDatadiri'])->name('kolektif.createDatadiri');
     Route::get('kolektif/createkk', [DatadiriController::class, 'createKk'])->name('kolektif.createKk');
     Route::get('kolektif/creatependidikan', [PesertaController::class, 'createPendidikan'])->name('kolektif.createPendidikan');
@@ -108,4 +111,13 @@ Route::group(['middleware' => ['auth']], function() {
     //prestasi
     Route::get('prestasi/create', [PrestasiController::class, 'create'])->name('prestasi.create');
     Route::post('prestasi/store', [PrestasiController::class, 'store'])->name('prestasi.store');
+
+    //pertanyaan
+    Route::get('pertanyaan/create', [PertanyaanController::class, 'create'])->name('pertanyaan.create');
+    Route::post('pertanyaan/create', [PertanyaanController::class, 'store'])->name('pertanyaan.store');
+
+    //pdf
+    Route::get('peserta/suratpermohonan/{peserta}', [PesertaController::class, 'suratPermohonanPerorangan'])->name('peserta.suratPermohonan');
+    Route::get('kolektif/suratpermohonan', [PesertaController::class, 'suratPermohonanKolektif'])->name('kolektif.suratPermohonan');
+
 });

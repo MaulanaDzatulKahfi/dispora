@@ -13,27 +13,27 @@ class CreatePertingTable extends Migration
      */
     public function up()
     {
-        // Schema::create('perting', function (Blueprint $table) {
+        Schema::create('perting', function (Blueprint $table) {
 
-        //     $table->id();
-        //     $table->string('kode_pt');
-        //     $table->string('name');
-        //     $table->string('status_pt');
-        //     $table->date('tgl_berdiri');
-        //     $table->string('sk_pt');
-        //     $table->date('tgl_sk_pt');
-        //     $table->longText('alamat');
-        //     $table->string('kelurahan');
-        //     $table->string('kecamatan');
-        //     $table->string('kota');
-        //     $table->string('provinsi');
-        //     $table->string('kode_pos');
-        //     $table->string('tlp');
-        //     $table->string('email');
-        //     $table->string('website');
-        //     $table->timestamps();
+            $table->id();
+            $table->string('kode_pt')->nullable();
+            $table->string('name')->nullable();
+            $table->string('status_pt')->nullable();
+            $table->date('tgl_berdiri')->nullable();
+            $table->string('sk_pt')->nullable();
+            $table->date('tgl_sk_pt')->nullable();
+            $table->longText('alamat')->nullable();
+            $table->string('kelurahan')->nullable();
+            $table->string('kecamatan')->nullable();
+            $table->string('kota')->nullable();
+            $table->string('provinsi')->nullable();
+            $table->string('kode_pos')->nullable();
+            $table->string('tlp')->nullable();
+            $table->string('email')->nullable();
+            $table->string('website')->nullable();
+            $table->timestamps();
 
-        // });
+        });
     }
 
     /**

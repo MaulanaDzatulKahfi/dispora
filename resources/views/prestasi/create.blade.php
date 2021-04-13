@@ -2,33 +2,39 @@
 
 @section('content')
     <div class="bg-green-600 p-4 shadow text-xl text-white">
-        <h3 class="font-bold pl-2">Tambah Peserta</h3>
+        <h3 class="font-bold pl-2">Prestasi</h3>
     </div>
 
     <div class="w-11/12 mx-auto">
         <!-- Top Navigation -->
-        <div class="flex justify-around pb-3 text-center">
+        <div class="flex pb-3 text-center overflow-x-scroll md:overflow-hidden">
             @if($role[0] == 'Peserta')
-                <div class="mt-3">
+                <div class="mt-3 mx-3 md:mx-auto">
                     <button class="font-bold text-gray-700 leading-tight focus:outline-none">Prestasi</button>
                     <div class="mt-1 border-b-4 border-green-600"></div>
                 </div>
-                <div class="mt-3">
+                <div class="mt-3 mx-3 md:mx-auto">
+                    <button class="font-bold text-gray-700 leading-tight focus:outline-none">Pertanyaan&Sosmed</button>
+                </div>
+                <div class="mt-3 mx-3 md:mx-auto">
                     <button class="font-bold text-gray-700 leading-tight focus:outline-none">Pendidikan</button>
                 </div>
             @endif
             @if($role[0] == 'Peserta-kolektif')
-                <div class="mt-3">
-                    <button class="font-bold text-gray-700 leading-tight focus:outline-none">Data Diri</button>
+                <div class="mt-3 mx-3 md:mx-auto">
+                    <button class="font-bold text-gray-700 leading-tight focus:outline-none">DataDiri</button>
                 </div>
-                <div class="mt-3">
-                    <button class="font-bold text-gray-700 leading-tight focus:outline-none">Kartu Keluarga</button>
+                <div class="mt-3 mx-3 md:mx-auto">
+                    <button class="font-bold text-gray-700 leading-tight focus:outline-none">KartuKeluarga</button>
                 </div>
-                <div class="mt-3">
+                <div class="mt-3 mx-3 md:mx-auto">
                     <button class="font-bold text-gray-700 leading-tight focus:outline-none">Prestasi</button>
                     <div class="mt-1 border-b-4 border-green-600"></div>
                 </div>
-                <div class="mt-3">
+                <div class="mt-3 mx-3 md:mx-auto">
+                    <button class="font-bold text-gray-700 leading-tight focus:outline-none">Pertanyaan&Sosmed</button>
+                </div>
+                <div class="mt-3 mx-3 md:mx-auto">
                     <button class="font-bold text-gray-700 leading-tight focus:outline-none">Pendidikan</button>
                 </div>
             @endif

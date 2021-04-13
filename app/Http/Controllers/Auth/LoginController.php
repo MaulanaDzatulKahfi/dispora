@@ -43,8 +43,11 @@ class LoginController extends Controller
         foreach($role as $r){
             if($r === 'Peserta'){
                 return '/datadiri/create';
+            }elseif($r == 'Peserta-kolektif'){
+                return '/kolektif/createpetugas';
+            }else{
+                return '/home';
             }
-            return '/home';
         }
     }
 

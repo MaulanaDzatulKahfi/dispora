@@ -60,6 +60,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'syarat' => ['required'],
+            'kategori' => ['required'],
         ], $messages);
     }
 
@@ -76,6 +77,12 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-        return $user->assignRole('Peserta');
+        if ($data['kategori'] == 'perorangan') {
+            return $user->assignRole('Peserta');
+        }elseif($data['kategori'] == 'kolektif'){
+            return $user->assignRole('Peserta-kolektif');
+        }else{
+            return $user->assignRole('Peserta');
+        }
     }
 }
